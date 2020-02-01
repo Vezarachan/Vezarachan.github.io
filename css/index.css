@@ -1,0 +1,118 @@
+/* fonts definition */
+@font-face {
+  font-family: "Fira Code Retina";
+  src: url("../fonts/fira-code-retina.ttf");
+}
+
+@font-face {
+  font-family: "Source Han Sans CN Regular";
+  src: url("../fonts/source-han-sans.otf");
+}
+
+/* footer */
+#footer {
+  position: absolute;
+  width: 100%;
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  height: 45px;
+  font-family: "Fira Code Retina", serif;
+  text-align: center;
+  line-height: 45px;
+  color: white;
+  background-color: #80CBC4;
+  z-index: 100;
+}
+
+/* content */
+#content {
+  top: 50%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+#title, #subtitle {
+  font-family: "Fira Code Retina", serif;
+  color: white;
+}
+
+#title {
+  font-size: 50px;
+  left: auto;
+  right: auto;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#subtitle {
+  font-size: 25px;
+  text-align: center;
+}
+
+#avatar {
+  left: auto;
+  right: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("../Murphie.png");
+  background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+}
+
+#links {
+  font-family: "Fira Code Retina", serif;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #26A69A;
+  font-weight: bold;
+}
+
+/* background image */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url("../background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  -webkit-background-size: cover;
+  background-position: center 0;
+}
+
