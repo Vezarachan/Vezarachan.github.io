@@ -20,6 +20,7 @@
   margin: 0;
   height: 45px;
   font-family: "Fira Code Retina", serif;
+  font-size: 10px;
   text-align: center;
   line-height: 45px;
   color: white;
@@ -95,8 +96,8 @@ a:visited {
 }
 
 a:hover {
-  color: #26A69A;
-  font-weight: bold;
+  color: #64FFDA;
+  font-weight: bolder;
 }
 
 /* background image */
