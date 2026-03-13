@@ -1,0 +1,26 @@
+{
+  "name": "Xiayin Lou",
+  "name_zh": "楼夏寅",
+  "tagline": "To automate the world.",
+  "position": "PhD Candidate",
+  "institution": "Chair of Cartography and Visual Analytics",
+  "university": "Technical University of Munich (TUM)",
+  "bio": "PhD candidate at the Chair of Cartography and Visual Analytics, Technical University of Munich (TUM). My research centers on making GeoAI trustworthy — I develop statistical frameworks for uncertainty quantification in spatial predictions, explainability of geospatial AI models, and automated model discovery using large language models.",
+  "interests": [
+    "Trail running",
+    "Marathon",
+    "Rowing",
+    "Cycling"
+  ],
+  "avatar": "vendor/img/avatar.jpg",
+  "links": {
+    "twitter": "https://twitter.com/vezarachan",
+    "github": "https://github.com/vezarachan",
+    "linkedin": "https://linkedin.com/in/xiayinlou",
+    "email": "mailto:xiayin.lou@tum.de",
+    "google_scholar": "https://scholar.google.com/citations?user=YOUR_ID",
+    "researchgate": "https://www.researchgate.net/profile/Xiayin-Lou",
+    "orcid": "https://orcid.org/YOUR-ORCID",
+    "cv": "vendor/CV_Xiayin.pdf"
+  }
+}

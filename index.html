@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xiayin Lou</title>
+  <link rel="icon" href="vendor/img/favicon.png" type="image/png" />
+  <meta name="description" content="Xiayin Lou — PhD Candidate at TUM, Chair of Cartography and Visual Analytics. Researching GeoAI, uncertainty quantification, and spatial intelligence." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+<!-- ─── Nav ────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#about">xl<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#news">news</a></li>
+      <li><a href="#publications">papers</a></li>
+      <li><a href="#research">research</a></li>
+      <li><a href="#cv">cv</a></li>
+      <li><a href="#beyond">life</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── Main ────────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- About -->
+  <section id="about">
+    <div class="profile-col">
+      <div class="avatar-wrap" id="avatar-wrap">
+        <div class="avatar-placeholder">👤</div>
+      </div>
+      <div class="profile-name">
+        <h1 id="profile-name">Xiayin Lou</h1>
+        <span class="name-zh" id="profile-name-zh"></span>
+      </div>
+      <p class="tagline" id="tagline"></p>
+      <div class="social-links" id="social-links"></div>
+      <div class="academic-links" id="academic-links"></div>
+    </div>
+
+    <div class="about-col">
+      <div class="section-label">about me</div>
+      <h2 class="section-title" id="about-title">Studying what we can<br>trust in GeoAI.</h2>
+      <p class="bio-text" id="bio-text"></p>
+      <div class="interests" id="interests"></div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news">
+    <div class="section-header">
+      <div class="section-label">latest</div>
+      <h2 class="section-title">News</h2>
+    </div>
+    <div class="news-list" id="news-list">
+      <p style="color:var(--text-muted);font-size:0.85rem;">Loading...</p>
+    </div>
+  </section>
+
+  <!-- Publications -->
+  <section id="publications">
+    <div class="section-header" style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;">
+      <div>
+        <div class="section-label">selected works</div>
+        <h2 class="section-title">Publications</h2>
+      </div>
+      <a href="papers.html" class="view-all-link">View all ↗</a>
+    </div>
+    <div class="pub-filters" id="pub-filters"></div>
+    <div class="pub-list" id="pub-list">
+      <p style="color:var(--text-muted);font-size:0.85rem;">Loading...</p>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section id="research">
+    <div class="section-header" style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;">
+      <div>
+        <div class="section-label">topics</div>
+        <h2 class="section-title">Research</h2>
+      </div>
+      <a href="research.html" class="view-all-link">View all ↗</a>
+    </div>
+    <div class="research-grid" id="research-grid">
+      <p style="color:var(--text-muted);font-size:0.85rem;">Loading...</p>
+    </div>
+  </section>
+
+  <!-- CV -->
+  <section id="cv">
+    <div class="section-header">
+      <div class="section-label">curriculum vitae</div>
+      <h2 class="section-title">CV</h2>
+    </div>
+    <div class="cv-cta">
+      <div class="cv-cta-text">
+        <h3>Full Curriculum Vitae</h3>
+        <p>Download my latest CV for a complete overview of my education, research, and publications.</p>
+      </div>
+      <a href="assets/cv.pdf" class="btn-primary" id="cv-link" target="_blank">
+        ↓ Download CV
+      </a>
+    </div>
+  </section>
+
+
+  <!-- Beyond Research -->
+  <section id="beyond">
+    <div class="section-header">
+      <div class="section-label">beyond research</div>
+      <h2 class="section-title">Life</h2>
+    </div>
+
+    <div class="beyond-interests" id="beyond-interests"></div>
+
+    <div class="race-map-wrap">
+      <div class="race-map-header">
+        <span class="section-label" style="margin-bottom:0;">trail races</span>
+        <a href="https://itra.run/api/RunnerSpace/GetRunnerSpace?memberString=LkomEhFSXvq5n156LOSLrQ%3D%3D" target="_blank" rel="noopener" class="itra-link">ITRA Profile ↗</a>
+      </div>
+      <div id="race-map"></div>
+      <div class="race-list" id="race-list"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── Footer ──────────────────────────────────────────────────────── -->
+<footer>
+  <span id="footer-text">© 2022–2026 Xiayin Lou (楼夏寅)</span>
+  &nbsp;·&nbsp;
+  Built with pure HTML/CSS/JS
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

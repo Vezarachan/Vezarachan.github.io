@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research — Xiayin Lou</title>
+  <link rel="icon" href="vendor/img/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* ── Research page hero ── */
+    .research-hero {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .research-hero .section-label { margin-bottom: 0.6rem; }
+    .research-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .research-hero p { color: var(--text-muted); font-size: 0.9rem; max-width: 560px; }
+
+    /* ── Research topic cards (detailed) ── */
+    .research-topic {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0 1.6rem;
+      margin-bottom: 3.5rem;
+      padding-bottom: 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .research-topic:last-child { border-bottom: none; }
+
+    .research-topic-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      padding-top: 0.2rem;
+      color: var(--accent);
+    }
+
+    .research-topic-body { min-width: 0; }
+
+    .research-topic-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .research-topic-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .research-topic-details {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
+      white-space: pre-line;
+    }
+
+    .research-key-ideas {
+      margin-bottom: 1.2rem;
+    }
+    .research-key-ideas-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .research-key-ideas ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .research-key-ideas ul li {
+      font-size: 0.88rem;
+      color: var(--text);
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .research-key-ideas ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      top: 0.15rem;
+    }
+
+    .research-related-papers {
+      margin-bottom: 1rem;
+    }
+    .research-related-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .research-paper-ref {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .research-paper-ref::before {
+      content: '📄';
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+    .research-paper-ref a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .research-paper-ref a:hover { text-decoration: underline; }
+
+    /* ── Demos section ── */
+    .demos-section {
+      margin-top: 1rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .demo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .demo-card:hover {
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      border-color: var(--accent);
+    }
+
+    .demo-card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .demo-card-subtitle {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+    }
+    .demo-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .demo-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .demo-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.4rem;
+    }
+    .demo-open-btn {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 12px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .demo-open-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .research-topic { grid-template-columns: 1fr; gap: 0.5rem; }
+      .research-topic-icon { font-size: 1.2rem; }
+      .demos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">xl<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">about</a></li>
+      <li><a href="index.html#news">news</a></li>
+      <li><a href="papers.html">papers</a></li>
+      <li><a href="research.html" style="color:var(--accent)">research</a></li>
+      <li><a href="index.html#cv">cv</a></li>
+      <li><a href="index.html#beyond">life</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="research-hero">
+    <div class="section-label">research directions</div>
+    <h1>Research</h1>
+    <p id="research-subtitle">Four interconnected directions on making GeoAI trustworthy, interpretable, and automated.</p>
+  </div>
+
+  <div id="research-topics"></div>
+
+  <!-- Demos section -->
+  <div class="demos-section">
+    <div class="section-label">interactive</div>
+    <h2 class="section-title">Demos</h2>
+    <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.5rem;">
+      Hands-on visualizations spanning multiple research directions.
+    </p>
+    <div class="demos-grid" id="demos-grid">
+      <p style="color:var(--text-muted);font-size:0.85rem;">Loading...</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <span id="footer-text">© 2022–2026 Xiayin Lou (楼夏寅)</span>
+  &nbsp;·&nbsp;
+  <a href="index.html">← Back to home</a>
+</footer>
+
+<script>
+async function load(path) {
+  const res = await fetch(path);
+  return res.json();
+}
+
+function renderResearchPage(research, pubs, profile) {
+  // Footer
+  const year = new Date().getFullYear();
+  const ftEl = document.getElementById('footer-text');
+  if (ftEl && profile) ftEl.textContent = `© 2022–${year} ${profile.name}${profile.name_zh ? ' (' + profile.name_zh + ')' : ''}`;
+
+  // Build a lookup from paper title → paper object
+  const pubByTitle = {};
+  pubs.forEach(p => { pubByTitle[p.title] = p; });
+
+  const container = document.getElementById('research-topics');
+  container.innerHTML = '';
+
+  research.forEach(r => {
+    const section = document.createElement('div');
+    section.className = 'research-topic';
+
+    // Related papers HTML
+    const relatedPapers = (r.paper_titles || [])
+      .map(title => pubByTitle[title])
+      .filter(Boolean);
+    const papersHTML = relatedPapers.length ? `
+      <div class="research-related-papers">
+        <div class="research-related-label">RELATED PAPERS</div>
+        ${relatedPapers.map(p => `
+          <div class="research-paper-ref">
+            <a href="${p.url || '#'}" target="_blank">${p.title}</a>
+            <span style="color:var(--text-muted);font-size:0.8rem;white-space:nowrap">— ${p.venue}</span>
+          </div>
+        `).join('')}
+      </div>` : '';
+
+    // Key ideas HTML
+    const ideasHTML = (r.key_ideas || []).length ? `
+      <div class="research-key-ideas">
+        <div class="research-key-ideas-label">KEY IDEAS</div>
+        <ul>${r.key_ideas.map(idea => `<li>${idea}</li>`).join('')}</ul>
+      </div>` : '';
+
+    // Tags
+    const tagsHTML = (r.tags || []).map(t => `<span class="research-tag">${t}</span>`).join('');
+
+    section.innerHTML = `
+      <div class="research-topic-icon">${r.icon}</div>
+      <div class="research-topic-body">
+        <div class="research-topic-title">${r.title}</div>
+        <div class="research-topic-tags">${tagsHTML}</div>
+        <p class="research-topic-details">${r.details || r.description}</p>
+        ${ideasHTML}
+        ${papersHTML}
+      </div>
+    `;
+    container.appendChild(section);
+  });
+}
+
+function renderDemos(demos) {
+  const grid = document.getElementById('demos-grid');
+  grid.innerHTML = '';
+  demos.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'demo-card';
+    const tagsHTML = (d.tags || []).map(t => `<span class="research-tag">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="demo-card-title">${d.title}</div>
+      <div class="demo-card-subtitle">${d.subtitle}</div>
+      <p class="demo-card-desc">${d.description}</p>
+      <div class="demo-card-tags">${tagsHTML}</div>
+      <div class="demo-card-footer">
+        <a class="demo-open-btn" href="${d.url}" target="_blank" rel="noopener">Open demo ↗</a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+(async () => {
+  try {
+    const [research, pubs, demos, profile] = await Promise.all([
+      load('data/research.json'),
+      load('data/publications.json'),
+      load('data/demos.json'),
+      load('data/profile.json'),
+    ]);
+    renderResearchPage(research, pubs, profile);
+    renderDemos(demos);
+  } catch (e) {
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

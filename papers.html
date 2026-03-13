@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications — Xiayin Lou</title>
+  <link rel="icon" href="vendor/img/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .papers-hero {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .papers-hero .section-label { margin-bottom: 0.6rem; }
+    .papers-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .papers-hero p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .papers-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pub-count {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .year-group { margin-bottom: 2.5rem; }
+
+    .year-heading {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .year-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .pub-card-full {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: start;
+    }
+    .pub-card-full:hover {
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      border-color: var(--accent);
+    }
+
+    .pub-type-badge {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .pub-type-badge.journal      { background: #e8f4f4; color: #2d6a6a; }
+    .pub-type-badge.conference   { background: #f0eeff; color: #5b4fc7; }
+    .pub-type-badge.under-review { background: #fef3e2; color: #a0620a; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">xl<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">about</a></li>
+      <li><a href="index.html#news">news</a></li>
+      <li><a href="papers.html" style="color:var(--accent)">papers</a></li>
+      <li><a href="research.html">research</a></li>
+      <li><a href="index.html#cv">cv</a></li>
+      <li><a href="index.html#beyond">life</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="papers-hero">
+    <div class="section-label">full list</div>
+    <h1>Publications</h1>
+    <p id="papers-subtitle">All peer-reviewed papers, conference proceedings, and preprints.</p>
+  </div>
+
+  <div class="papers-toolbar">
+    <div class="pub-filters" id="pub-filters-full"></div>
+    <span class="pub-count" id="pub-count"></span>
+  </div>
+
+  <div id="pub-groups"></div>
+</main>
+
+<footer>
+  <span id="footer-text">© 2022–2026 Xiayin Lou (楼夏寅)</span>
+  &nbsp;·&nbsp;
+  <a href="index.html">← Back to home</a>
+</footer>
+
+<script>
+async function load(path) {
+  const res = await fetch(path);
+  return res.json();
+}
+
+const TYPE_LABEL = { journal: 'Journal', conference: 'Conference', 'under-review': 'Under Review' };
+const TYPE_ORDER = ['journal', 'conference', 'under-review'];
+
+function renderPapersPage(pubs, profile) {
+  // Footer
+  const year = new Date().getFullYear();
+  const ftEl = document.getElementById('footer-text');
+  if (ftEl && profile) ftEl.textContent = `© 2022–${year} ${profile.name}${profile.name_zh ? ' (' + profile.name_zh + ')' : ''}`;
+
+  // Filters
+  const presentTypes = TYPE_ORDER.filter(t => pubs.some(p => p.type === t));
+  const filtersEl = document.getElementById('pub-filters-full');
+  const allBtn = Object.assign(document.createElement('button'), { className: 'filter-btn active', textContent: 'All' });
+  allBtn.dataset.filter = 'all';
+  filtersEl.appendChild(allBtn);
+  presentTypes.forEach(type => {
+    const btn = Object.assign(document.createElement('button'), { className: 'filter-btn', textContent: TYPE_LABEL[type] });
+    btn.dataset.filter = type;
+    filtersEl.appendChild(btn);
+  });
+
+  const countEl = document.getElementById('pub-count');
+  function updateCount() {
+    const visible = document.querySelectorAll('.pub-card-full:not(.hidden)').length;
+    countEl.textContent = `${visible} paper${visible !== 1 ? 's' : ''}`;
+  }
+
+  filtersEl.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    filtersEl.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.pub-card-full').forEach(card => {
+      card.classList.toggle('hidden', filter !== 'all' && card.dataset.type !== filter);
+    });
+    // Show/hide empty year groups
+    document.querySelectorAll('.year-group').forEach(g => {
+      const hasVisible = [...g.querySelectorAll('.pub-card-full')].some(c => !c.classList.contains('hidden'));
+      g.classList.toggle('hidden', !hasVisible);
+    });
+    updateCount();
+  });
+
+  // Group by year
+  const byYear = {};
+  pubs.forEach(p => {
+    if (!byYear[p.year]) byYear[p.year] = [];
+    byYear[p.year].push(p);
+  });
+  const years = Object.keys(byYear).sort((a, b) => b - a);
+
+  const groupsEl = document.getElementById('pub-groups');
+  groupsEl.innerHTML = '';
+
+  years.forEach(year => {
+    const group = document.createElement('div');
+    group.className = 'year-group';
+
+    const heading = document.createElement('div');
+    heading.className = 'year-heading';
+    heading.textContent = year;
+    group.appendChild(heading);
+
+    byYear[year].forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'pub-card-full';
+      card.dataset.type = p.type || '';
+
+      const links = [];
+      if (p.url)  links.push(`<a class="pub-link" href="${p.url}" target="_blank">paper</a>`);
+      if (p.pdf)  links.push(`<a class="pub-link" href="${p.pdf}" target="_blank">pdf</a>`);
+      if (p.code) links.push(`<a class="pub-link" href="${p.code}" target="_blank">code</a>`);
+      if (p.demo) links.push(`<a class="pub-link pub-link-demo" href="${p.demo}" target="_blank">demo ↗</a>`);
+
+      const typeLabel = TYPE_LABEL[p.type] || p.type || '';
+
+      card.innerHTML = `
+        <div>
+          <div class="pub-title" style="margin-bottom:0.4rem">
+            <a href="${p.url || '#'}" target="_blank" style="color:var(--text);text-decoration:none;font-size:1rem;font-weight:600;line-height:1.4;transition:color 0.2s"
+               onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'">${p.title}</a>
+          </div>
+          <div class="pub-authors">${p.authors}</div>
+          <div class="pub-venue">${p.venue}</div>
+          <div class="pub-tags" style="margin-top:0.5rem">${(p.tags || []).map(t => `<span class="pub-tag">${t}</span>`).join('')}</div>
+          ${links.length ? `<div class="pub-links" style="margin-top:0.6rem">${links.join('')}</div>` : ''}
+        </div>
+        <span class="pub-type-badge ${p.type || ''}">${typeLabel}</span>
+      `;
+      group.appendChild(card);
+    });
+
+    groupsEl.appendChild(group);
+  });
+
+  updateCount();
+}
+
+(async () => {
+  try {
+    const [pubs, profile] = await Promise.all([
+      load('data/publications.json'),
+      load('data/profile.json'),
+    ]);
+    renderPapersPage(pubs, profile);
+  } catch (e) {
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

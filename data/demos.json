@@ -1,0 +1,42 @@
+[
+  {
+    "title": "GeoEvolve: Algorithm Evolution",
+    "subtitle": "Watch a geospatial algorithm evolve across 10 LLM-guided rounds",
+    "description": "An animated walkthrough of GeoEvolve's iterative optimization process. Each round shows the RAG knowledge retrieved, the diagnosis of current limitations, code diffs, and performance metrics (Rand Index, NMI, SSR, MAE) — making the entire discovery process transparent and inspectable.",
+    "tags": ["LLM", "Multi-Agent", "Algorithm Discovery", "Evolutionary Search"],
+    "url": "https://vezarachan.github.io/GeoEvolveWeb/",
+    "related": ["GeoEvolve"]
+  },
+  {
+    "title": "Spatial Uncertainty Visualizer",
+    "subtitle": "Interactive conformal prediction for spatial data",
+    "description": "Upload your own spatial dataset, choose a model (OLS, Random Forest, XGBoost, GWR), and explore location-adaptive prediction intervals via conformal inference. Visualizes uncertainty maps, halo glyphs, and coverage diagnostics.",
+    "tags": ["Conformal Prediction", "Spatial Statistics", "Uncertainty"],
+    "url": "https://spatialuncertaintyviz-production.up.railway.app/",
+    "related": ["GeoConformal Prediction"]
+  },
+  {
+    "title": "GeoXCP Explorer",
+    "subtitle": "Uncertainty quantification for spatial SHAP explanations",
+    "description": "Explore how feature importance (SHAP values) varies across geographic space, and how much we can trust those explanations at each location. Supports Seattle housing, NYC income, and US voting datasets.",
+    "tags": ["XAI", "Uncertainty", "SHAP", "Visual Analytics"],
+    "url": "https://vezarachan.github.io/GeoXCPWeb/",
+    "related": ["GeoXCP"]
+  },
+  {
+    "title": "GeoXCP Radial Focus",
+    "subtitle": "Localized feature importance with a radial lens",
+    "description": "Place a focus circle anywhere on the map to examine feature importance and geo-uncertainty for nearby data points. A polar-coordinate chart ranks features by SHAP magnitude and uncertainty within the selected region.",
+    "tags": ["Visual Analytics", "Radial Chart", "Local Explainability"],
+    "url": "https://vezarachan.github.io/GeoXCPWeb/focus_radial.html",
+    "related": ["GeoXCP"]
+  },
+  {
+    "title": "GeoXCP Bivariate",
+    "subtitle": "Bivariate color mapping + radar charts for spatial explainability",
+    "description": "A 3×3 bivariate color scheme encodes SHAP importance and geo-uncertainty simultaneously. Hover any point to reveal a radar chart of per-feature contributions with uncertainty bands, or Alt+hover for a neighborhood focus view.",
+    "tags": ["Visual Analytics", "Bivariate Map", "Radar Chart"],
+    "url": "https://vezarachan.github.io/GeoXCPWeb/bivariate.html",
+    "related": ["GeoXCP"]
+  }
+]

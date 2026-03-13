@@ -1,0 +1,72 @@
+[
+  {
+    "title": "Uncertainty & Bias Quantification for GeoAI",
+    "icon": "◈",
+    "description": "Designing methodology that identifies whether GeoAI predictions should (not) be trusted and whether GeoAI predictions perform differently across different locations. Recent focus is more about using conformal inference in the geospatial context. Applications include urban planning, epidemiology, responsible use of LLMs, etc.",
+    "details": "Classical machine learning provides point predictions, but in high-stakes geospatial applications — disease mapping, urban planning, climate modeling — knowing the reliability of a prediction is as important as the prediction itself. My work adapts conformal prediction, a distribution-free framework with coverage guarantees, to account for the unique structure of spatial data: autocorrelation, non-stationarity, and uneven data density across regions.\n\nA key insight is that calibration sets for conformal prediction should respect spatial proximity — nearby locations have correlated residuals, so naive random splits over-cover some areas and under-cover others. I develop spatially-aware weighting schemes that produce location-specific prediction intervals that are both valid and informative.",
+    "key_ideas": [
+      "Conformal prediction with spatial autocorrelation-aware calibration weights",
+      "Location-specific prediction intervals that adapt to local data density",
+      "Decomposing uncertainty into aleatoric (data) and epistemic (model) components across space",
+      "Bias detection: identifying regions where GeoAI predictions systematically deviate",
+      "Applications to house price estimation, air quality prediction, and epidemiological mapping"
+    ],
+    "tags": ["Conformal Inference", "Bias Detection", "Spatial Statistics"],
+    "demo": "https://spatialuncertaintyviz-production.up.railway.app/",
+    "paper_titles": [
+      "GeoConformal Prediction: A Model-Agnostic Framework for Measuring the Uncertainty of Spatial Prediction",
+      "Towards the Uncertainty-aware Geospatial Artificial Intelligence"
+    ]
+  },
+  {
+    "title": "Generalization & Mechanism of GeoAI",
+    "icon": "◉",
+    "description": "Studying the generalization and its underlying mechanism of GeoAI models across datasets, population, and regions. Related themes concern distribution shift among different geographical regions.",
+    "details": "GeoAI models trained in one city or region often fail silently when deployed elsewhere. Understanding why — and building models that generalize — requires unpacking the mechanisms behind geographic distribution shift. This line of work investigates how spatial structure (heterogeneity, scale, boundary effects) shapes a model's ability to transfer across regions, populations, and data modalities.\n\nRather than treating generalization purely as a benchmark problem, I aim to build mechanistic understanding: what properties of a spatial dataset make transfer hard? Which model architectures preserve spatial invariances? How can we detect distribution shift before deployment?",
+    "key_ideas": [
+      "Geographic distribution shift: quantifying how feature-label relationships change across regions",
+      "Scale sensitivity: how aggregation level (census tract vs. county) affects model behavior",
+      "Identifying spatially invariant representations that transfer across domains",
+      "Early-warning diagnostics for detecting covariate shift in deployment settings"
+    ],
+    "tags": ["Distribution Shift", "Model Generalization", "Transfer Learning"],
+    "demo": "",
+    "paper_titles": []
+  },
+  {
+    "title": "Geospatial Visual Analytics for GeoAI",
+    "icon": "◐",
+    "description": "Understanding GeoAI models through interactive geospatial visual analytics. Related themes concern human-in-the-loop exploration of model behavior, spatial prediction patterns, and uncertainty in GeoAI systems.",
+    "details": "Black-box GeoAI models generate predictions at scale, but practitioners need to understand and trust those predictions to act on them. Visual analytics bridges this gap by turning model internals — feature importance, prediction errors, uncertainty estimates — into spatially-grounded, interactive displays that support human reasoning.\n\nMy work builds interactive tools that let analysts explore SHAP-based explanations alongside their geographic context. A key challenge is that SHAP values themselves carry uncertainty (they are estimates, not ground truth), and that uncertainty varies spatially. Visualizing both the explanation and its reliability in a single coherent interface is a central design goal.",
+    "key_ideas": [
+      "Geo-uncertainty-aware SHAP visualization: encoding both importance and reliability",
+      "Radial focus charts for localized feature importance analysis within user-defined regions",
+      "Bivariate color mapping to jointly represent feature importance and geo-uncertainty",
+      "Human-in-the-loop workflows: iterative model refinement guided by visual exploration",
+      "Design principles for uncertainty communication in map-based interfaces"
+    ],
+    "tags": ["Visual Analytics", "Human-in-the-Loop", "Interactive Maps"],
+    "demo": "https://vezarachan.github.io/GeoXCPWeb/",
+    "paper_titles": [
+      "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
+      "Uncertainty-aware Geospatial Visual Analytics"
+    ]
+  },
+  {
+    "title": "LLM-Powered Geospatial Knowledge Discovery",
+    "icon": "◇",
+    "description": "Developing a self-evolving framework for GeoAI that can automatically optimize geospatial algorithms. This can largely accelerate geospatial scientific research.",
+    "details": "Scientific progress in geospatial modeling has historically depended on manual hypothesis generation — a researcher proposes a model, tests it, and iterates. Large language models, equipped with domain knowledge and code generation capability, open the possibility of automating this cycle. The key challenge is ensuring that LLM-generated models are not just syntactically valid but geographically meaningful.\n\nGeoEvolve frames geospatial model discovery as an evolutionary search problem guided by multi-agent LLMs. One agent proposes model modifications informed by spatial theory; another evaluates them on benchmark datasets; a third synthesizes findings across iterations. The result is an automated pipeline that can discover novel spatial algorithms without human intervention at each step.",
+    "key_ideas": [
+      "Multi-agent LLM framework for iterative geospatial algorithm discovery",
+      "Coupling evolutionary search with geospatial domain knowledge constraints",
+      "Automated benchmarking of discovered models against classical baselines (Kriging, GWR, etc.)",
+      "Responsible automation: interpretability and reproducibility of LLM-generated spatial models"
+    ],
+    "tags": ["LLM", "Multi-Agent", "Algorithm Discovery"],
+    "demo": "https://vezarachan.github.io/GeoEvolveWeb/",
+    "paper_titles": [
+      "GeoEvolve: Automating Geospatial Model Discovery via Multi-Agent Large Language Models"
+    ]
+  }
+]

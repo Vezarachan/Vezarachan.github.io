@@ -1,0 +1,30 @@
+[
+  {
+    "date": "Dec 2025",
+    "content": "How can we build more reliable and trustworthy spatial intelligence? Happy to share our short paper",
+    "link_text": "Towards the Uncertainty-aware Geospatial Artificial Intelligence",
+    "link_url": "#",
+    "suffix": ", exploring the future of uncertainty in GeoAI!"
+  },
+  {
+    "date": "Oct 2025",
+    "content": "Can we truly trust the explanations provided by AI for spatial data? Our new paper",
+    "link_text": "GeoXCP: uncertainty quantification of spatial explanations in explainable AI",
+    "link_url": "#",
+    "suffix": " is now available online in International Journal of Geographical Information Science, providing a framework to quantify XAI uncertainty."
+  },
+  {
+    "date": "Sep 2025",
+    "content": "Can AI autonomously \"think\" like a geographer to discover new spatial algorithms? Excited to share our preprint",
+    "link_text": "GeoEvolve: Automating Geospatial Model Discovery via Multi-Agent Large Language Models",
+    "link_url": "#",
+    "suffix": ", a framework that couples evolutionary search with domain knowledge to automatically refine classical geospatial models like Kriging and GWR!"
+  },
+  {
+    "date": "Jul 2025",
+    "content": "Looking for a model-agnostic way to measure the reliability of spatial predictions? We are excited to announce that",
+    "link_text": "GeoConformal prediction: a model-agnostic framework of measuring the uncertainty of spatial prediction",
+    "link_url": "#",
+    "suffix": " is now published in Annals of the American Association of Geographers."
+  }
+]
