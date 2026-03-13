@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Geospatial Conformal Prediction: Towards Trustworthy Uncertainty Quantification for GeoAI",
+    "event": "Spatiotemporal Innovation Symposium",
+    "year": 2025,
+    "date": "2025",
+    "type": "invited",
+    "topic": "Uncertainty & Bias Quantification for GeoAI",
+    "abstract": "An introduction to conformal prediction in the geospatial context, covering spatially-aware calibration strategies, location-adaptive prediction intervals, and applications to urban and environmental modeling.",
+    "related_paper": "GeoConformal Prediction: A Model-Agnostic Framework for Measuring the Uncertainty of Spatial Prediction",
+    "slides": "",
+    "video": ""
+  },
+  {
+    "title": "Seeing What We Don't Know: Uncertainty-aware Visual Analytics for Geospatial Explainability",
+    "event": "Next Generation Cartographer",
+    "year": 2025,
+    "date": "2025",
+    "type": "invited",
+    "topic": "Geospatial Visual Analytics for GeoAI",
+    "abstract": "A talk on the design and implementation of interactive geospatial visual analytics tools that make uncertainty a first-class citizen — covering SHAP-based geo-uncertainty visualization, bivariate mapping, and human-in-the-loop exploration workflows.",
+    "related_paper": "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
+    "slides": "",
+    "video": ""
+  }
+]

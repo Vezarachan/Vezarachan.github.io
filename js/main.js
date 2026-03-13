@@ -276,19 +276,42 @@ function renderBeyond(profile, races) {
   }
 }
 
+/* ─── Talks (homepage preview) ───────────────────────────────────────── */
+function renderTalksPreview(talks) {
+  const el = document.getElementById('talks-preview');
+  if (!el) return;
+  el.innerHTML = '';
+  talks.forEach(t => {
+    const item = document.createElement('div');
+    item.className = 'talk-preview-item';
+    item.innerHTML = `
+      <div class="talk-preview-meta">
+        <span class="talk-preview-event">${t.event}</span>
+        <span class="talk-preview-year">${t.year}</span>
+        <span class="talk-preview-type">${t.type}</span>
+      </div>
+      <div class="talk-preview-title">${t.title}</div>
+      <div class="talk-preview-topic">${t.topic}</div>
+    `;
+    el.appendChild(item);
+  });
+}
+
 /* ─── Init ───────────────────────────────────────────────────────────── */
 async function init() {
   try {
-    const [profile, news, publications, research, races] = await Promise.all([
+    const [profile, news, publications, research, races, talks] = await Promise.all([
       load('data/profile.json'),
       load('data/news.json'),
       load('data/publications.json'),
       load('data/research.json'),
       load('data/races.json'),
+      load('data/talks.json'),
     ]);
     renderProfile(profile);
     renderNews(news);
     renderPublications(publications);
+    renderTalksPreview(talks);
     renderResearch(research);
     renderBeyond(profile, races);
   } catch (err) {

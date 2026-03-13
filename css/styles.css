@@ -793,5 +793,51 @@ footer a {
 }
 .view-all-link:hover { opacity: 0.7; }
 
+/* ─── Talks preview (homepage) ───────────────────────────────────────── */
+.talk-preview-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.talk-preview-item:last-child { border-bottom: none; }
+
+.talk-preview-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+.talk-preview-event {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.talk-preview-year {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.talk-preview-type {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 1px 7px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+}
+.talk-preview-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 0.25rem;
+}
+.talk-preview-topic {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
 /* ─── Utility ────────────────────────────────────────────────────────── */
 .hidden { display: none !important; }

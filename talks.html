@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talks — Xiayin Lou</title>
+  <link rel="icon" href="vendor/img/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .talks-hero {
+      padding: 3rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .talks-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .talks-hero p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .talk-count {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+    }
+
+    .talks-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .talk-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0 1.8rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .talk-item:last-child { border-bottom: none; }
+
+    .talk-year {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding-top: 0.25rem;
+      text-align: right;
+    }
+
+    .talk-body { min-width: 0; }
+
+    .talk-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .talk-event {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .talk-type-badge {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      padding: 1px 7px;
+      border-radius: 3px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      color: var(--accent);
+    }
+
+    .talk-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.45;
+      margin-bottom: 0.6rem;
+    }
+
+    .talk-abstract {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .talk-topic-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 8px;
+      margin-bottom: 0.7rem;
+    }
+
+    .talk-links {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .talk-link {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      padding: 3px 10px;
+      border-radius: 3px;
+      transition: all 0.18s;
+    }
+    .talk-link:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .talk-link.disabled {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .talk-related-paper {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+    .talk-related-paper::before {
+      content: '📄';
+      font-size: 0.72rem;
+      flex-shrink: 0;
+    }
+    .talk-related-paper a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.8rem;
+    }
+    .talk-related-paper a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .talk-item { grid-template-columns: 1fr; gap: 0.3rem; }
+      .talk-year { text-align: left; padding-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-back" href="index.html">← xl<span class="brand-dot">.</span></a>
+    <span class="nav-page-title">talks</span>
+  </div>
+</nav>
+
+<main>
+  <div class="talks-hero">
+    <div class="section-label">presentations</div>
+    <h1>Talks</h1>
+    <p>Invited talks and presentations at conferences and symposia.</p>
+    <div class="talk-count" id="talk-count"></div>
+  </div>
+
+  <div class="talks-list" id="talks-list">
+    <p style="color:var(--text-muted);font-size:0.85rem;">Loading...</p>
+  </div>
+</main>
+
+<footer>
+  <span id="footer-text">© 2022–2026 Xiayin Lou (楼夏寅)</span>
+  &nbsp;·&nbsp;
+  <a href="index.html">← Back to home</a>
+</footer>
+
+<script>
+async function load(path) {
+  const res = await fetch(path);
+  if (!res.ok) throw new Error('Failed: ' + path);
+  return res.json();
+}
+
+function renderTalks(talks, pubs, profile) {
+  // footer
+  const year = new Date().getFullYear();
+  const ftEl = document.getElementById('footer-text');
+  if (ftEl && profile) ftEl.textContent = `© 2022–${year} ${profile.name}${profile.name_zh ? ' (' + profile.name_zh + ')' : ''}`;
+
+  // count
+  const countEl = document.getElementById('talk-count');
+  if (countEl) countEl.textContent = `${talks.length} talk${talks.length !== 1 ? 's' : ''}`;
+
+  // pub lookup
+  const pubByTitle = {};
+  pubs.forEach(p => { pubByTitle[p.title] = p; });
+
+  const list = document.getElementById('talks-list');
+  list.innerHTML = '';
+
+  talks.forEach(t => {
+    const relPub = t.related_paper ? pubByTitle[t.related_paper] : null;
+
+    const linksHTML = [
+      t.slides ? `<a class="talk-link" href="${t.slides}" target="_blank">slides ↗</a>` : `<span class="talk-link disabled">slides</span>`,
+      t.video  ? `<a class="talk-link" href="${t.video}"  target="_blank">video ↗</a>`  : `<span class="talk-link disabled">video</span>`,
+    ].join('');
+
+    const relatedHTML = relPub ? `
+      <div class="talk-related-paper">
+        <a href="${relPub.url || '#'}" target="_blank">${relPub.title}</a>
+        <span>— ${relPub.venue}</span>
+      </div>` : '';
+
+    const item = document.createElement('div');
+    item.className = 'talk-item';
+    item.innerHTML = `
+      <div class="talk-year">${t.year}</div>
+      <div class="talk-body">
+        <div class="talk-meta">
+          <span class="talk-event">${t.event}</span>
+          <span class="talk-type-badge">${t.type}</span>
+        </div>
+        <div class="talk-title">${t.title}</div>
+        <span class="talk-topic-tag">${t.topic}</span>
+        <p class="talk-abstract">${t.abstract}</p>
+        <div class="talk-links">${linksHTML}</div>
+        ${relatedHTML}
+      </div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+(async () => {
+  try {
+    const [talks, pubs, profile] = await Promise.all([
+      load('data/talks.json'),
+      load('data/publications.json'),
+      load('data/profile.json'),
+    ]);
+    renderTalks(talks, pubs, profile);
+  } catch (e) {
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>
