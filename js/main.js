@@ -235,13 +235,13 @@ function renderBeyond(profile, races) {
 
   const finishedIcon = L.divIcon({
     className: '',
-    html: `<div style="width:12px;height:12px;border-radius:50%;background:#2d6a6a;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.3)"></div>`,
-    iconSize: [12, 12], iconAnchor: [6, 6],
+    html: `<div style="width:16px;height:16px;border-radius:50%;background:#2d8a8a;border:2.5px solid #fff;box-shadow:0 0 0 1.5px #2d8a8a,0 2px 6px rgba(0,0,0,0.35)"></div>`,
+    iconSize: [16, 16], iconAnchor: [8, 8],
   });
   const dnfIcon = L.divIcon({
     className: '',
-    html: `<div style="width:10px;height:10px;border-radius:50%;background:#b0ada6;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2)"></div>`,
-    iconSize: [10, 10], iconAnchor: [5, 5],
+    html: `<div style="width:12px;height:12px;border-radius:50%;background:#b0ada6;border:2px solid #fff;box-shadow:0 0 0 1px #b0ada6,0 1px 4px rgba(0,0,0,0.25)"></div>`,
+    iconSize: [12, 12], iconAnchor: [6, 6],
   });
 
   races.forEach(r => {
