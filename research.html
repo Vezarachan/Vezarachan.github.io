@@ -10,198 +10,264 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <style>
-    /* ── Research page hero ── */
+    /* ── Hero ── */
     .research-hero {
-      padding: 3rem 0 2rem;
+      padding: 3rem 0 2.5rem;
       border-bottom: 1px solid var(--border);
-      margin-bottom: 3rem;
+      margin-bottom: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
-    .research-hero .section-label { margin-bottom: 0.6rem; }
-    .research-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .research-hero p { color: var(--text-muted); font-size: 0.9rem; max-width: 560px; }
+    .research-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .research-hero p { color: var(--text-muted); font-size: 0.9rem; max-width: 480px; }
 
-    /* ── Research topic cards (detailed) ── */
-    .research-topic {
+    /* ── Demos strip (near top) ── */
+    .demos-strip {
+      margin: 2.5rem 0;
+      padding: 1.6rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+    }
+    .demos-strip-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .demos-strip-header .section-label { margin: 0; }
+    .demos-strip-header h2 { font-size: 1rem; font-weight: 700; margin: 0; }
+
+    .demos-scroll {
       display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 0 1.6rem;
-      margin-bottom: 3.5rem;
-      padding-bottom: 3.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .demo-chip {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: calc(var(--r) - 2px);
+      background: var(--bg);
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .demo-chip:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .demo-chip-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .demo-chip-title span.arrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+    .demo-chip-sub {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      line-height: 1.3;
+    }
+
+    /* ── Research topics ── */
+    .topics-section { margin-top: 0.5rem; }
+
+    .research-topic {
       border-bottom: 1px solid var(--border);
+      padding: 2.2rem 0;
     }
     .research-topic:last-child { border-bottom: none; }
 
-    .research-topic-icon {
-      font-size: 1.6rem;
-      line-height: 1;
-      padding-top: 0.2rem;
+    /* Always-visible header */
+    .topic-header {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 0 1.4rem;
+      align-items: start;
+      margin-bottom: 0.9rem;
+    }
+    .topic-icon {
+      font-size: 1.4rem;
       color: var(--accent);
+      padding-top: 0.15rem;
+      line-height: 1;
     }
-
-    .research-topic-body { min-width: 0; }
-
-    .research-topic-title {
-      font-size: 1.2rem;
+    .topic-header-body { min-width: 0; }
+    .topic-title {
+      font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: var(--text);
+      margin-bottom: 0.35rem;
     }
-
-    .research-topic-tags {
+    .topic-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-bottom: 1rem;
+      gap: 0.3rem;
+      margin-bottom: 0.7rem;
     }
-
-    .research-topic-details {
+    .topic-overview {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      font-size: 0.92rem;
-      line-height: 1.75;
-      margin-bottom: 1.2rem;
-      white-space: pre-line;
+      line-height: 1.7;
     }
 
-    .research-key-ideas {
-      margin-bottom: 1.2rem;
+    /* ── <details> collapsibles ── */
+    .topic-details-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-left: calc(40px + 1.4rem); /* align with body */
     }
-    .research-key-ideas-label {
+
+    details.topic-section {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    details.topic-section[open] {
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+    }
+
+    summary.topic-section-head {
+      padding: 0.65rem 1rem;
       font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      color: var(--accent);
+      font-size: 0.72rem;
+      letter-spacing: 0.07em;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      list-style: none;
+      user-select: none;
+      background: var(--surface);
+      transition: background 0.15s;
     }
-    .research-key-ideas ul {
+    summary.topic-section-head::-webkit-details-marker { display: none; }
+    summary.topic-section-head:hover { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+
+    .summary-chevron {
+      margin-left: auto;
+      font-size: 0.65rem;
+      transition: transform 0.2s;
+    }
+    details[open] .summary-chevron { transform: rotate(180deg); }
+
+    .topic-section-body {
+      padding: 1rem 1.1rem 1.1rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Key ideas list */
+    .key-ideas-list {
       list-style: none;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.45rem;
     }
-    .research-key-ideas ul li {
-      font-size: 0.88rem;
+    .key-ideas-list li {
+      font-size: 0.87rem;
       color: var(--text);
       padding-left: 1.2rem;
       position: relative;
-      line-height: 1.5;
+      line-height: 1.55;
     }
-    .research-key-ideas ul li::before {
+    .key-ideas-list li::before {
       content: '→';
       position: absolute;
       left: 0;
       color: var(--accent);
       font-family: var(--mono);
-      font-size: 0.75rem;
-      top: 0.15rem;
+      font-size: 0.72rem;
+      top: 0.18rem;
     }
 
-    .research-related-papers {
-      margin-bottom: 1rem;
-    }
-    .research-related-label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    .research-paper-ref {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-    }
-    .research-paper-ref::before {
-      content: '📄';
-      font-size: 0.75rem;
-      flex-shrink: 0;
-    }
-    .research-paper-ref a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    .research-paper-ref a:hover { text-decoration: underline; }
-
-    /* ── Demos section ── */
-    .demos-section {
-      margin-top: 1rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .demos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.2rem;
-      margin-top: 1.5rem;
-    }
-
-    .demo-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 1.4rem;
+    /* Projects list */
+    .projects-list {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-      transition: box-shadow 0.2s, border-color 0.2s;
+      gap: 0.8rem;
     }
-    .demo-card:hover {
-      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-      border-color: var(--accent);
+    .project-item {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
     }
-
-    .demo-card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .demo-card-subtitle {
+    .project-status {
       font-family: var(--mono);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
+      padding: 2px 7px;
+      border-radius: 3px;
+      white-space: nowrap;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .project-status.finished {
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
       color: var(--accent);
     }
-    .demo-card-desc {
-      font-size: 0.85rem;
+    .project-status.ongoing {
+      background: color-mix(in srgb, #e09000 12%, transparent);
+      color: #b07000;
+    }
+    .project-title {
+      font-size: 0.87rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+    .project-desc {
+      font-size: 0.83rem;
       color: var(--text-muted);
       line-height: 1.6;
-      flex: 1;
     }
-    .demo-card-tags {
+
+    /* Papers list */
+    .papers-list {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
+      flex-direction: column;
+      gap: 0.7rem;
     }
-    .demo-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 0.4rem;
+    .paper-ref {
+      font-size: 0.85rem;
+      line-height: 1.55;
     }
-    .demo-open-btn {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 4px 12px;
-      border-radius: 3px;
+    .paper-ref a {
+      color: var(--text);
       text-decoration: none;
-      transition: all 0.2s;
+      font-weight: 500;
     }
-    .demo-open-btn:hover {
-      background: var(--accent);
-      color: #fff;
+    .paper-ref a:hover { color: var(--accent); }
+    .paper-ref .paper-venue {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
     }
 
     @media (max-width: 600px) {
-      .research-topic { grid-template-columns: 1fr; gap: 0.5rem; }
-      .research-topic-icon { font-size: 1.2rem; }
-      .demos-grid { grid-template-columns: 1fr; }
+      .topic-header { grid-template-columns: 1fr; }
+      .topic-icon { display: none; }
+      .topic-details-group { padding-left: 0; }
+      .demos-scroll { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -222,25 +288,27 @@
 </nav>
 
 <main>
+  <!-- Hero -->
   <div class="research-hero">
-    <div class="section-label">research directions</div>
-    <h1>Research</h1>
-    <p id="research-subtitle">Four interconnected directions on making GeoAI trustworthy, interpretable, and automated.</p>
+    <div>
+      <div class="section-label">research directions</div>
+      <h1>Research</h1>
+      <p>Four interconnected directions on making GeoAI trustworthy, interpretable, and automated.</p>
+    </div>
   </div>
 
-  <div id="research-topics"></div>
-
-  <!-- Demos section -->
-  <div class="demos-section">
-    <div class="section-label">interactive</div>
-    <h2 class="section-title">Demos</h2>
-    <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.5rem;">
-      Hands-on visualizations spanning multiple research directions.
-    </p>
-    <div class="demos-grid" id="demos-grid">
+  <!-- Demos strip — visible near top -->
+  <div class="demos-strip">
+    <div class="demos-strip-header">
+      <span class="section-label" style="margin:0">interactive demos</span>
+    </div>
+    <div class="demos-scroll" id="demos-grid">
       <p style="color:var(--text-muted);font-size:0.85rem;">Loading...</p>
     </div>
   </div>
+
+  <!-- Research topics -->
+  <div class="topics-section" id="research-topics"></div>
 </main>
 
 <footer>
@@ -252,16 +320,39 @@
 <script>
 async function load(path) {
   const res = await fetch(path);
+  if (!res.ok) throw new Error('Failed: ' + path);
   return res.json();
 }
 
-function renderResearchPage(research, pubs, profile) {
-  // Footer
+/* ── Render demo chips ── */
+function renderDemos(demos) {
+  const grid = document.getElementById('demos-grid');
+  grid.innerHTML = '';
+  demos.forEach(d => {
+    const a = document.createElement('a');
+    a.className = 'demo-chip';
+    a.href = d.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = `
+      <div class="demo-chip-title">
+        <span>${d.title}</span>
+        <span class="arrow">↗</span>
+      </div>
+      <div class="demo-chip-sub">${d.subtitle}</div>
+    `;
+    grid.appendChild(a);
+  });
+}
+
+/* ── Render research topics ── */
+function renderResearch(research, pubs, profile) {
+  // footer
   const year = new Date().getFullYear();
   const ftEl = document.getElementById('footer-text');
   if (ftEl && profile) ftEl.textContent = `© 2022–${year} ${profile.name}${profile.name_zh ? ' (' + profile.name_zh + ')' : ''}`;
 
-  // Build a lookup from paper title → paper object
+  // pub lookup
   const pubByTitle = {};
   pubs.forEach(p => { pubByTitle[p.title] = p; });
 
@@ -269,65 +360,81 @@ function renderResearchPage(research, pubs, profile) {
   container.innerHTML = '';
 
   research.forEach(r => {
-    const section = document.createElement('div');
-    section.className = 'research-topic';
+    const topic = document.createElement('div');
+    topic.className = 'research-topic';
 
-    // Related papers HTML
-    const relatedPapers = (r.paper_titles || [])
-      .map(title => pubByTitle[title])
-      .filter(Boolean);
-    const papersHTML = relatedPapers.length ? `
-      <div class="research-related-papers">
-        <div class="research-related-label">RELATED PAPERS</div>
-        ${relatedPapers.map(p => `
-          <div class="research-paper-ref">
-            <a href="${p.url || '#'}" target="_blank">${p.title}</a>
-            <span style="color:var(--text-muted);font-size:0.8rem;white-space:nowrap">— ${p.venue}</span>
-          </div>
-        `).join('')}
-      </div>` : '';
-
-    // Key ideas HTML
-    const ideasHTML = (r.key_ideas || []).length ? `
-      <div class="research-key-ideas">
-        <div class="research-key-ideas-label">KEY IDEAS</div>
-        <ul>${r.key_ideas.map(idea => `<li>${idea}</li>`).join('')}</ul>
-      </div>` : '';
-
-    // Tags
     const tagsHTML = (r.tags || []).map(t => `<span class="research-tag">${t}</span>`).join('');
 
-    section.innerHTML = `
-      <div class="research-topic-icon">${r.icon}</div>
-      <div class="research-topic-body">
-        <div class="research-topic-title">${r.title}</div>
-        <div class="research-topic-tags">${tagsHTML}</div>
-        <p class="research-topic-details">${r.details || r.description}</p>
-        ${ideasHTML}
-        ${papersHTML}
-      </div>
-    `;
-    container.appendChild(section);
-  });
-}
+    /* ── key ideas collapsible ── */
+    const hasIdeas = (r.key_ideas || []).length > 0;
+    const ideasHTML = hasIdeas ? `
+      <details class="topic-section">
+        <summary class="topic-section-head">
+          KEY IDEAS
+          <span class="summary-chevron">▾</span>
+        </summary>
+        <div class="topic-section-body">
+          <ul class="key-ideas-list">
+            ${r.key_ideas.map(idea => `<li>${idea}</li>`).join('')}
+          </ul>
+        </div>
+      </details>` : '';
 
-function renderDemos(demos) {
-  const grid = document.getElementById('demos-grid');
-  grid.innerHTML = '';
-  demos.forEach(d => {
-    const card = document.createElement('div');
-    card.className = 'demo-card';
-    const tagsHTML = (d.tags || []).map(t => `<span class="research-tag">${t}</span>`).join('');
-    card.innerHTML = `
-      <div class="demo-card-title">${d.title}</div>
-      <div class="demo-card-subtitle">${d.subtitle}</div>
-      <p class="demo-card-desc">${d.description}</p>
-      <div class="demo-card-tags">${tagsHTML}</div>
-      <div class="demo-card-footer">
-        <a class="demo-open-btn" href="${d.url}" target="_blank" rel="noopener">Open demo ↗</a>
+    /* ── projects collapsible ── */
+    const hasProjects = (r.projects || []).length > 0;
+    const projectsHTML = hasProjects ? `
+      <details class="topic-section">
+        <summary class="topic-section-head">
+          PROJECTS
+          <span class="summary-chevron">▾</span>
+        </summary>
+        <div class="topic-section-body">
+          <div class="projects-list">
+            ${r.projects.map(p => `
+              <div class="project-item">
+                <span class="project-status ${p.status}">${p.status === 'ongoing' ? 'ongoing' : 'finished'}</span>
+                <div>
+                  <div class="project-title">${p.title}</div>
+                  <div class="project-desc">${p.description}</div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>
+      </details>` : '';
+
+    /* ── papers collapsible ── */
+    const relatedPubs = (r.paper_titles || []).map(t => pubByTitle[t]).filter(Boolean);
+    const papersHTML = relatedPubs.length ? `
+      <details class="topic-section">
+        <summary class="topic-section-head">
+          REPRESENTATIVE PAPERS
+          <span class="summary-chevron">▾</span>
+        </summary>
+        <div class="topic-section-body">
+          <div class="papers-list">
+            ${relatedPubs.map(p => `
+              <div class="paper-ref">
+                <a href="${p.url || '#'}" target="_blank">${p.title}</a>
+                <span class="paper-venue">${p.authors} · ${p.venue}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </details>` : '';
+
+    const hasCollapsibles = hasIdeas || hasProjects || relatedPubs.length;
+
+    topic.innerHTML = `
+      <div class="topic-header">
+        <div class="topic-icon">${r.icon}</div>
+        <div class="topic-header-body">
+          <div class="topic-title">${r.title}</div>
+          <div class="topic-tags">${tagsHTML}</div>
+          <p class="topic-overview">${r.description}</p>
+        </div>
       </div>
+      ${hasCollapsibles ? `<div class="topic-details-group">${ideasHTML}${projectsHTML}${papersHTML}</div>` : ''}
     `;
-    grid.appendChild(card);
+    container.appendChild(topic);
   });
 }
 
@@ -339,8 +446,8 @@ function renderDemos(demos) {
       load('data/demos.json'),
       load('data/profile.json'),
     ]);
-    renderResearchPage(research, pubs, profile);
     renderDemos(demos);
+    renderResearch(research, pubs, profile);
   } catch (e) {
     console.error(e);
   }

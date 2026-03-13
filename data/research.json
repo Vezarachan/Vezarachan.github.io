@@ -11,6 +11,18 @@
       "Bias detection: identifying regions where GeoAI predictions systematically deviate",
       "Applications to house price estimation, air quality prediction, and epidemiological mapping"
     ],
+    "projects": [
+      {
+        "title": "GeoConformal Prediction",
+        "status": "finished",
+        "description": "A model-agnostic framework for spatial conformal prediction. Adapts split conformal inference to account for spatial autocorrelation, producing location-adaptive prediction intervals with marginal coverage guarantees."
+      },
+      {
+        "title": "Spatial Uncertainty Visualizer",
+        "status": "finished",
+        "description": "An interactive tool for exploring location-specific prediction intervals, halo-glyph uncertainty maps, and coverage diagnostics. Supports OLS, Random Forest, XGBoost, and GWR models on user-uploaded datasets."
+      }
+    ],
     "tags": ["Conformal Inference", "Bias Detection", "Spatial Statistics"],
     "demo": "https://spatialuncertaintyviz-production.up.railway.app/",
     "paper_titles": [
@@ -29,6 +41,13 @@
       "Identifying spatially invariant representations that transfer across domains",
       "Early-warning diagnostics for detecting covariate shift in deployment settings"
     ],
+    "projects": [
+      {
+        "title": "Spatial Distribution Shift Analysis",
+        "status": "ongoing",
+        "description": "Investigating how and why GeoAI models degrade across geographic boundaries. Developing benchmark protocols and diagnostic metrics for spatial generalization evaluation."
+      }
+    ],
     "tags": ["Distribution Shift", "Model Generalization", "Transfer Learning"],
     "demo": "",
     "paper_titles": []
@@ -44,6 +63,18 @@
       "Bivariate color mapping to jointly represent feature importance and geo-uncertainty",
       "Human-in-the-loop workflows: iterative model refinement guided by visual exploration",
       "Design principles for uncertainty communication in map-based interfaces"
+    ],
+    "projects": [
+      {
+        "title": "GeoXCP",
+        "status": "finished",
+        "description": "Uncertainty quantification for spatial SHAP explanations. GeoXCP estimates geo-uncertainty — how much we can trust the explanation at each location — and visualizes it alongside feature importance through bivariate maps, radial focus charts, and radar diagrams."
+      },
+      {
+        "title": "Uncertainty-aware Geo-visual Analytics",
+        "status": "ongoing",
+        "description": "Extending the GeoXCP framework to support broader model families and more complex spatial data structures, including temporal dynamics and multi-resolution data."
+      }
     ],
     "tags": ["Visual Analytics", "Human-in-the-Loop", "Interactive Maps"],
     "demo": "https://vezarachan.github.io/GeoXCPWeb/",
@@ -62,6 +93,13 @@
       "Coupling evolutionary search with geospatial domain knowledge constraints",
       "Automated benchmarking of discovered models against classical baselines (Kriging, GWR, etc.)",
       "Responsible automation: interpretability and reproducibility of LLM-generated spatial models"
+    ],
+    "projects": [
+      {
+        "title": "GeoEvolve",
+        "status": "finished",
+        "description": "An automated pipeline for geospatial model discovery via multi-agent LLMs. Uses retrieval-augmented generation (RAG) to inject domain knowledge at each evolutionary step, tracking performance across 10 rounds of refinement."
+      }
     ],
     "tags": ["LLM", "Multi-Agent", "Algorithm Discovery"],
     "demo": "https://vezarachan.github.io/GeoEvolveWeb/",
