@@ -690,6 +690,35 @@ footer a {
 
 .beyond-interest-card .int-icon { font-size: 1.1rem; }
 
+/* ─── Travel Map ─────────────────────────────────────────────────────── */
+.travel-map-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.travel-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.travel-stats {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+#travel-map {
+  height: 280px;
+  width: 100%;
+  z-index: 0;
+}
+
 .race-map-wrap {
   background: var(--surface);
   border: 1px solid var(--border);

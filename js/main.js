@@ -276,6 +276,50 @@ function renderBeyond(profile, races) {
   }
 }
 
+/* ─── Travel Map ─────────────────────────────────────────────────────── */
+function renderTravel(cities) {
+  // Stats line
+  const statsEl = document.getElementById('travel-stats');
+  if (statsEl) {
+    const countries = new Set(cities.map(c => c.country)).size;
+    const continents = [...new Set(cities.map(c => c.continent))].join(' & ');
+    statsEl.textContent = `${cities.length} cities · ${countries} countries · ${continents}`;
+  }
+
+  const mapEl = document.getElementById('travel-map');
+  if (!mapEl || !window.L) return;
+
+  const map = L.map('travel-map', { zoomControl: true, scrollWheelZoom: false });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OSM</a> © <a href="https://carto.com/">CARTO</a>',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // Fit bounds to all cities
+  const bounds = L.latLngBounds(cities.map(c => [c.latitude, c.longitude]));
+  map.fitBounds(bounds, { padding: [24, 24], maxZoom: 5 });
+
+  // Log-scale dot sizing
+  const logCounts = cities.map(c => Math.log(c.point_count + 1));
+  const minL = Math.min(...logCounts);
+  const maxL = Math.max(...logCounts);
+
+  cities.forEach(c => {
+    const t = (Math.log(c.point_count + 1) - minL) / (maxL - minL);
+    const r = Math.round(3 + t * 9); // radius 3–12 px
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="width:${r * 2}px;height:${r * 2}px;border-radius:50%;background:rgba(185,115,45,0.6);border:1.5px solid rgba(185,115,45,0.9);box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>`,
+      iconSize: [r * 2, r * 2],
+      iconAnchor: [r, r],
+    });
+    L.marker([c.latitude, c.longitude], { icon })
+      .bindTooltip(`<strong>${c.name}</strong><br>${c.country}`, { direction: 'top', offset: [0, -r] })
+      .addTo(map);
+  });
+}
+
 /* ─── Talks (homepage preview) ───────────────────────────────────────── */
 function renderTalksPreview(talks) {
   const el = document.getElementById('talks-preview');
@@ -300,19 +344,21 @@ function renderTalksPreview(talks) {
 /* ─── Init ───────────────────────────────────────────────────────────── */
 async function init() {
   try {
-    const [profile, news, publications, research, races, talks] = await Promise.all([
+    const [profile, news, publications, research, races, talks, cities] = await Promise.all([
       load('data/profile.json'),
       load('data/news.json'),
       load('data/publications.json'),
       load('data/research.json'),
       load('data/races.json'),
       load('data/talks.json'),
+      load('data/visited_cities.json'),
     ]);
     renderProfile(profile);
     renderNews(news);
     renderPublications(publications);
     renderTalksPreview(talks);
     renderResearch(research);
+    renderTravel(cities);
     renderBeyond(profile, races);
   } catch (err) {
     console.error('Failed to load data:', err);
