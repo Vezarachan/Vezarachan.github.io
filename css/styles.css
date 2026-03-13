@@ -82,6 +82,27 @@ nav {
 
 .nav-links a:hover { color: var(--accent); }
 
+/* Sub-page nav (papers.html, research.html) */
+.nav-back {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--accent); }
+.nav-back .brand-dot { color: var(--accent); }
+
+.nav-page-title {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
 /* ─── Layout ─────────────────────────────────────────────────────────── */
 main {
   max-width: var(--max-w);
