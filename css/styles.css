@@ -763,7 +763,15 @@ footer a {
 .race-list {
   display: flex;
   flex-direction: column;
+  max-height: 272px;   /* ~5 rows */
+  overflow-y: auto;
+  /* slim scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
+.race-list::-webkit-scrollbar { width: 4px; }
+.race-list::-webkit-scrollbar-track { background: transparent; }
+.race-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 .race-item {
   display: grid;
