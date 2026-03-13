@@ -53,12 +53,12 @@
   {
     "year": 2025,
     "type": "conference",
-    "featured": false,
+    "featured": true,
     "title": "Uncertainty-aware Geospatial Visual Analytics",
     "authors": "Xiayin Lou, Peng Luo, Liqiu Meng",
-    "venue": "Abstracts of the ICA, 2025",
-    "tags": ["Uncertainty", "Visual Analytics"],
-    "url": "https://ica-abs.copernicus.org/articles/10/182/2025/ica-abs-10-182-2025.pdf",
+    "venue": "Abstracts of the International Cartographic Association, 2025",
+    "tags": ["Uncertainty", "Visual Analytics", "Cartography"],
+    "url": "https://doi.org/10.5194/ica-abs-10-182-2025",
     "pdf": "https://ica-abs.copernicus.org/articles/10/182/2025/ica-abs-10-182-2025.pdf",
     "code": ""
   },
