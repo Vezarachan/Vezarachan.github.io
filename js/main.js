@@ -204,9 +204,9 @@ function renderResearch(research) {
 
 /* ─── Beyond Research ────────────────────────────────────────────────── */
 const INTEREST_ICONS = {
-  'Running': '🏃',
-  'Rowing':  '🚣',
-  'Cycling': '🚴',
+  'Trail running/Marathon': '🏃',
+  'Rowing':                 '🚣',
+  'Cycling':                '🚴',
 };
 
 function renderBeyond(profile, races) {
@@ -312,7 +312,7 @@ function renderTravel(data) {
     const r = Math.round(3 + t * 9); // radius 3–12 px
     const icon = L.divIcon({
       className: '',
-      html: `<div style="width:${r * 2}px;height:${r * 2}px;border-radius:50%;background:rgba(185,115,45,0.6);border:1.5px solid rgba(185,115,45,0.9);box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>`,
+      html: `<div style="width:${r * 2}px;height:${r * 2}px;border-radius:50%;background:rgba(100,120,200,0.55);border:1.5px solid rgba(100,120,200,0.85);box-shadow:0 1px 3px rgba(0,0,0,0.18);"></div>`,
       iconSize: [r * 2, r * 2],
       iconAnchor: [r, r],
     });
