@@ -19,7 +19,7 @@
     "type": "invited",
     "topic": "Geospatial Visual Analytics for GeoAI",
     "abstract": "A talk on the design and implementation of interactive geospatial visual analytics tools that make uncertainty a first-class citizen — covering SHAP-based geo-uncertainty visualization, bivariate mapping, and human-in-the-loop exploration workflows.",
-    "related_paper": "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
+    "related_paper": "Uncertainty-aware Geospatial Visual Analytics",
     "slides": "",
     "video": ""
   }
