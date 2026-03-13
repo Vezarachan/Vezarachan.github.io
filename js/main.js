@@ -204,10 +204,9 @@ function renderResearch(research) {
 
 /* ─── Beyond Research ────────────────────────────────────────────────── */
 const INTEREST_ICONS = {
-  'Trail running': '🏔️',
-  'Marathon':      '🏃',
-  'Rowing':        '🚣',
-  'Cycling':       '🚴',
+  'Running': '🏃',
+  'Rowing':  '🚣',
+  'Cycling': '🚴',
 };
 
 function renderBeyond(profile, races) {
