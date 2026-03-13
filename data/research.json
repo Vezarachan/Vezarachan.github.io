@@ -18,6 +18,11 @@
         "description": "A model-agnostic framework for spatial conformal prediction. Adapts split conformal inference to account for spatial autocorrelation, producing location-adaptive prediction intervals with marginal coverage guarantees."
       },
       {
+        "title": "GeoXCP",
+        "status": "finished",
+        "description": "Uncertainty quantification for spatial SHAP explanations. GeoXCP estimates geo-uncertainty — how much we can trust the explanation at each location — and visualizes it alongside feature importance through bivariate maps, radial focus charts, and radar diagrams."
+      },
+      {
         "title": "Spatial Uncertainty Visualizer",
         "status": "finished",
         "description": "An interactive tool for exploring location-specific prediction intervals, halo-glyph uncertainty maps, and coverage diagnostics. Supports OLS, Random Forest, XGBoost, and GWR models on user-uploaded datasets."
@@ -27,6 +32,7 @@
     "demo": "https://spatialuncertaintyviz-production.up.railway.app/",
     "paper_titles": [
       "GeoConformal Prediction: A Model-Agnostic Framework for Measuring the Uncertainty of Spatial Prediction",
+      "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
       "Towards the Uncertainty-aware Geospatial Artificial Intelligence"
     ]
   },
@@ -66,20 +72,14 @@
     ],
     "projects": [
       {
-        "title": "GeoXCP",
-        "status": "finished",
-        "description": "Uncertainty quantification for spatial SHAP explanations. GeoXCP estimates geo-uncertainty — how much we can trust the explanation at each location — and visualizes it alongside feature importance through bivariate maps, radial focus charts, and radar diagrams."
-      },
-      {
         "title": "Uncertainty-aware Geo-visual Analytics",
         "status": "ongoing",
-        "description": "Extending the GeoXCP framework to support broader model families and more complex spatial data structures, including temporal dynamics and multi-resolution data."
+        "description": "Building interactive visual analytics tools for exploring GeoAI model behavior — prediction errors, feature importance, and spatial patterns — with uncertainty as a first-class citizen in the interface design."
       }
     ],
     "tags": ["Visual Analytics", "Human-in-the-Loop", "Interactive Maps"],
     "demo": "https://vezarachan.github.io/GeoXCPWeb/",
     "paper_titles": [
-      "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
       "Uncertainty-aware Geospatial Visual Analytics"
     ]
   },
