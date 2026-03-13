@@ -277,7 +277,10 @@ function renderBeyond(profile, races) {
 }
 
 /* ─── Travel Map ─────────────────────────────────────────────────────── */
-function renderTravel(cities) {
+function renderTravel(data) {
+  // Support both a plain array and the {cities: [...]} wrapper format
+  const cities = Array.isArray(data) ? data : (data.cities || []);
+
   // Stats line
   const statsEl = document.getElementById('travel-stats');
   if (statsEl) {
@@ -344,24 +347,30 @@ function renderTalksPreview(talks) {
 /* ─── Init ───────────────────────────────────────────────────────────── */
 async function init() {
   try {
-    const [profile, news, publications, research, races, talks, cities] = await Promise.all([
+    const [profile, news, publications, research, races, talks] = await Promise.all([
       load('data/profile.json'),
       load('data/news.json'),
       load('data/publications.json'),
       load('data/research.json'),
       load('data/races.json'),
       load('data/talks.json'),
-      load('data/visited_cities.json'),
     ]);
     renderProfile(profile);
     renderNews(news);
     renderPublications(publications);
     renderTalksPreview(talks);
     renderResearch(research);
-    renderTravel(cities);
     renderBeyond(profile, races);
   } catch (err) {
     console.error('Failed to load data:', err);
+  }
+
+  // Travel map loaded separately so a fetch failure doesn't break other sections
+  try {
+    const cities = await load('data/visited_cities.json');
+    renderTravel(cities);
+  } catch (err) {
+    console.error('Failed to load visited_cities:', err);
   }
 }
 
