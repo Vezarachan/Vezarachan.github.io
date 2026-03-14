@@ -339,7 +339,7 @@ function renderDemos(demos) {
 }
 
 /* ── Render research topics ── */
-function renderResearch(research, pubs, profile) {
+function renderResearch(research, pubs, profile, posts) {
   // footer
   const year = new Date().getFullYear();
   const ftEl = document.getElementById('footer-text');
@@ -348,6 +348,15 @@ function renderResearch(research, pubs, profile) {
   // pub lookup
   const pubByTitle = {};
   pubs.forEach(p => { pubByTitle[p.title] = p; });
+
+  // posts by research direction
+  const postsByResearch = {};
+  (posts || []).forEach(post => {
+    if (post.related_research) {
+      if (!postsByResearch[post.related_research]) postsByResearch[post.related_research] = [];
+      postsByResearch[post.related_research].push(post);
+    }
+  });
 
   const container = document.getElementById('research-topics');
   container.innerHTML = '';
@@ -405,16 +414,39 @@ function renderResearch(research, pubs, profile) {
         </summary>
         <div class="topic-section-body">
           <div class="papers-list">
-            ${relatedPubs.map(p => `
+            ${relatedPubs.map(p => {
+              const relPost = postsByResearch[r.title] ? postsByResearch[r.title].find(post => post.related_paper === p.title) : null;
+              return `
               <div class="paper-ref">
                 <a href="${p.url || '#'}" target="_blank">${p.title}</a>
                 <span class="paper-venue">${p.authors} · ${p.venue}</span>
+                ${relPost ? `<a class="paper-post-link" href="post.html?slug=${relPost.slug}">read post →</a>` : ''}
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+      </details>` : '';
+
+    /* ── posts collapsible ── */
+    const topicPosts = (postsByResearch[r.title] || []);
+    const postsHTML = topicPosts.length ? `
+      <details class="topic-section">
+        <summary class="topic-section-head">
+          POSTS
+          <span class="summary-chevron">▾</span>
+        </summary>
+        <div class="topic-section-body">
+          <div class="papers-list">
+            ${topicPosts.map(post => `
+              <div class="paper-ref">
+                <a href="post.html?slug=${post.slug}">${post.title}</a>
+                <span class="paper-venue">${post.date}${post.tags && post.tags.length ? ' · ' + post.tags.join(', ') : ''}</span>
               </div>`).join('')}
           </div>
         </div>
       </details>` : '';
 
-    const hasCollapsibles = hasIdeas || hasProjects || relatedPubs.length;
+    const hasCollapsibles = hasIdeas || hasProjects || relatedPubs.length || topicPosts.length;
 
     topic.innerHTML = `
       <div class="topic-header">
@@ -425,7 +457,7 @@ function renderResearch(research, pubs, profile) {
           <p class="topic-overview">${r.description}</p>
         </div>
       </div>
-      ${hasCollapsibles ? `<div class="topic-details-group">${ideasHTML}${projectsHTML}${papersHTML}</div>` : ''}
+      ${hasCollapsibles ? `<div class="topic-details-group">${ideasHTML}${projectsHTML}${papersHTML}${postsHTML}</div>` : ''}
     `;
     container.appendChild(topic);
   });
@@ -433,14 +465,15 @@ function renderResearch(research, pubs, profile) {
 
 (async () => {
   try {
-    const [research, pubs, demos, profile] = await Promise.all([
+    const [research, pubs, demos, profile, posts] = await Promise.all([
       load('data/research.json'),
       load('data/publications.json'),
       load('data/demos.json'),
       load('data/profile.json'),
+      load('data/posts.json'),
     ]);
     renderDemos(demos);
-    renderResearch(research, pubs, profile);
+    renderResearch(research, pubs, profile, posts);
   } catch (e) {
     console.error(e);
   }

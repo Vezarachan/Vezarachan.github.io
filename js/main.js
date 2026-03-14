@@ -342,22 +342,50 @@ function renderTalksPreview(talks) {
   });
 }
 
+/* ─── Writing preview ───────────────────────────────────────────────── */
+function renderWritingPreview(posts) {
+  const el = document.getElementById('writing-preview');
+  if (!el) return;
+  if (!posts.length) { el.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">No posts yet.</p>'; return; }
+
+  // Newest first, show up to 3
+  const sorted = [...posts].sort((a, b) => (b.date || '').localeCompare(a.date || '')).slice(0, 3);
+  el.innerHTML = '';
+  sorted.forEach(p => {
+    const tags = Array.isArray(p.tags) ? p.tags : [];
+    const item = document.createElement('a');
+    item.className = 'writing-preview-item';
+    item.href = `post.html?slug=${p.slug}`;
+    item.innerHTML = `
+      <div class="writing-preview-meta">
+        <span class="writing-preview-date">${p.date || ''}</span>
+        ${tags.map(t => `<span class="writing-preview-tag">${t}</span>`).join('')}
+      </div>
+      <div class="writing-preview-title">${p.title}</div>
+      ${p.subtitle ? `<div class="writing-preview-sub">${p.subtitle}</div>` : ''}
+    `;
+    el.appendChild(item);
+  });
+}
+
 /* ─── Init ───────────────────────────────────────────────────────────── */
 async function init() {
   try {
-    const [profile, news, publications, research, races, talks] = await Promise.all([
+    const [profile, news, publications, research, races, talks, posts] = await Promise.all([
       load('data/profile.json'),
       load('data/news.json'),
       load('data/publications.json'),
       load('data/research.json'),
       load('data/races.json'),
       load('data/talks.json'),
+      load('data/posts.json'),
     ]);
     renderProfile(profile);
     renderNews(news);
     renderPublications(publications);
     renderTalksPreview(talks);
     renderResearch(research);
+    renderWritingPreview(posts);
     renderBeyond(profile, races);
   } catch (err) {
     console.error('Failed to load data:', err);

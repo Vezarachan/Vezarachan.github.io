@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing — Xiayin Lou</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .writing-hero { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+    .writing-hero h1 { font-size: 2rem; font-weight: 600; letter-spacing: -0.025em; margin-bottom: 0.4rem; }
+    .writing-hero p  { color: var(--text-muted); font-size: 0.95rem; }
+
+    .posts-list { display: flex; flex-direction: column; gap: 0; }
+
+    .post-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 0 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .post-row:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); border-radius: var(--r); }
+    .post-row:first-child { border-top: 1px solid var(--border); }
+
+    .post-row-date {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      padding-top: 0.15rem;
+      letter-spacing: 0.02em;
+    }
+
+    .post-row-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      line-height: 1.4;
+    }
+    .post-row:hover .post-row-title { color: var(--accent); }
+
+    .post-row-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.55rem;
+    }
+
+    .post-row-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .post-row-tag {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    }
+
+    .post-row-links {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.8rem;
+      font-size: 0.8rem;
+    }
+    .post-row-link-rel {
+      font-family: var(--mono);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+    }
+    .post-row-link-rel span { color: var(--accent); }
+
+    .writing-empty { color: var(--text-muted); font-size: 0.9rem; padding: 3rem 0; }
+
+    @media (max-width: 600px) {
+      .post-row { grid-template-columns: 1fr; gap: 0.3rem 0; }
+      .post-row-date { font-size: 0.72rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-back" href="index.html">← Xiayin Lou</a>
+    <span class="nav-page-title">writing</span>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="writing-hero">
+    <h1>Writing</h1>
+    <p>Notes, explanations, and ideas around my research — and anything else worth writing down.</p>
+  </div>
+
+  <div class="posts-list" id="posts-list">
+    <p class="writing-empty">Loading…</p>
+  </div>
+</div>
+
+<script>
+async function load(path) {
+  const res = await fetch(path);
+  if (!res.ok) throw new Error(res.status);
+  return res.json();
+}
+
+(async () => {
+  const listEl = document.getElementById('posts-list');
+  try {
+    const posts = await load('data/posts.json');
+    if (!posts.length) {
+      listEl.innerHTML = '<p class="writing-empty">No posts yet.</p>';
+      return;
+    }
+
+    // Sort newest first
+    posts.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+    listEl.innerHTML = '';
+    posts.forEach(p => {
+      const tags = Array.isArray(p.tags) ? p.tags : [];
+      const row = document.createElement('a');
+      row.className = 'post-row';
+      row.href = `post.html?slug=${p.slug}`;
+
+      const relatedBits = [];
+      if (p.related_paper)    relatedBits.push(`paper: <span>${p.related_paper}</span>`);
+      if (p.related_research) relatedBits.push(`topic: <span>${p.related_research}</span>`);
+
+      row.innerHTML = `
+        <div class="post-row-date">${p.date || ''}</div>
+        <div>
+          <div class="post-row-title">${p.title}</div>
+          ${p.subtitle ? `<div class="post-row-subtitle">${p.subtitle}</div>` : ''}
+          ${tags.length ? `<div class="post-row-tags">${tags.map(t => `<span class="post-row-tag">${t}</span>`).join('')}</div>` : ''}
+          ${relatedBits.length ? `<div class="post-row-links">${relatedBits.map(b => `<span class="post-row-link-rel">${b}</span>`).join('')}</div>` : ''}
+        </div>
+      `;
+      listEl.appendChild(row);
+    });
+  } catch (e) {
+    listEl.innerHTML = '<p class="writing-empty">Failed to load posts.</p>';
+    console.error(e);
+  }
+})();
+</script>
+</body>
+</html>

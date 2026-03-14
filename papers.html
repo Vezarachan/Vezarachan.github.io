@@ -125,7 +125,12 @@ async function load(path) {
 const TYPE_LABEL = { journal: 'Journal', conference: 'Conference', 'under-review': 'Under Review' };
 const TYPE_ORDER = ['journal', 'conference', 'under-review'];
 
-function renderPapersPage(pubs, profile) {
+function renderPapersPage(pubs, profile, posts) {
+  // build post lookup by related_paper title
+  const postByPaper = {};
+  (posts || []).forEach(post => {
+    if (post.related_paper) postByPaper[post.related_paper] = post;
+  });
   // Footer
   const year = new Date().getFullYear();
   const ftEl = document.getElementById('footer-text');
@@ -196,6 +201,8 @@ function renderPapersPage(pubs, profile) {
       if (p.pdf)  links.push(`<a class="pub-link" href="${p.pdf}" target="_blank">pdf</a>`);
       if (p.code) links.push(`<a class="pub-link" href="${p.code}" target="_blank">code</a>`);
       if (p.demo) links.push(`<a class="pub-link pub-link-demo" href="${p.demo}" target="_blank">demo ↗</a>`);
+      const relPost = postByPaper[p.title];
+      if (relPost) links.push(`<a class="pub-link pub-link-post" href="post.html?slug=${relPost.slug}">post →</a>`);
 
       const typeLabel = TYPE_LABEL[p.type] || p.type || '';
 
@@ -223,11 +230,12 @@ function renderPapersPage(pubs, profile) {
 
 (async () => {
   try {
-    const [pubs, profile] = await Promise.all([
+    const [pubs, profile, posts] = await Promise.all([
       load('data/publications.json'),
       load('data/profile.json'),
+      load('data/posts.json'),
     ]);
-    renderPapersPage(pubs, profile);
+    renderPapersPage(pubs, profile, posts);
   } catch (e) {
     console.error(e);
   }

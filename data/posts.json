@@ -1,0 +1,11 @@
+[
+  {
+    "slug": "geoconformal",
+    "title": "GeoConformal Prediction",
+    "date": "2025-03",
+    "tags": ["Uncertainty Quantification", "GeoAI"],
+    "subtitle": "A model-agnostic framework for generating statistically valid uncertainty regions for any geospatial prediction model.",
+    "related_paper": "GeoConformal Prediction: A Model-Agnostic Framework for Measuring the Uncertainty of Spatial Prediction",
+    "related_research": "Uncertainty & Bias Quantification for GeoAI"
+  }
+]
