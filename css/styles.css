@@ -17,7 +17,7 @@
   --nav-h:       60px;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
 
 body {
   font-family: var(--sans);
