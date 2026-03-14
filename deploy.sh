@@ -21,11 +21,38 @@ fi
 if [ "$1" = "new" ]; then
   SLUG="$2"
   TITLE="${3:-$SLUG}"
+  DATE=$(date +%Y-%m)
+  FILE="posts/${SLUG}.md"
   if [ -z "$SLUG" ]; then
     echo "Usage: ./deploy.sh new <slug> [\"Title\"]"
     exit 1
   fi
-  ./new-post.sh "$SLUG" "$TITLE"
+  if [ -f "$FILE" ]; then
+    echo "Error: $FILE already exists."
+    exit 1
+  fi
+  mkdir -p posts
+  cat > "$FILE" << EOF
+---
+title: ${TITLE}
+date: ${DATE}
+tags: []
+subtitle:
+---
+
+## Motivation
+
+...
+
+## Method
+
+...
+
+## Results
+
+...
+EOF
+  echo -e "${GREEN}✓  Created $FILE${RESET}"
   echo ""
   echo -e "${YELLOW}Next steps:${RESET}"
   echo "  1. Edit posts/${SLUG}.md"
