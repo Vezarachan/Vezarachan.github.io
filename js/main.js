@@ -196,7 +196,6 @@ function renderResearch(research) {
       <div class="research-title">${r.title}</div>
       <p class="research-desc">${r.description}</p>
       <div class="research-tags">${(r.tags || []).map(t => `<span class="research-tag">${t}</span>`).join('')}</div>
-      ${r.demo ? `<a class="research-demo-link" href="${r.demo}" target="_blank" rel="noopener">Try it ↗</a>` : ''}
     `;
     grid.appendChild(card);
   });
