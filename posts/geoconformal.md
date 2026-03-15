@@ -43,7 +43,7 @@ GeoConformal addresses this through **spatially-aware calibration**. The key ide
 
 Instead of a global quantile, we compute a *local* quantile $\hat{q}(s)$ at each test location $s$ by weighting calibration points by spatial proximity:
 
-$$\hat{q}(s) = \text{Quantile}_{1-\alpha}\Bigl(\{R_i \cdot w(s, s_i)\}_{i=1}^{n}\Bigr)$$
+$$\hat{q}(s) = \text{Quantile}_{1-\alpha}\left(\{R_i \cdot w(s, s_i)\}_{i=1}^{n}\right)$$
 
 $$w(s,s_i)=\exp\left(-\frac{\lVert s - s_i\rVert^2}{2h^2}\right)$$
 
