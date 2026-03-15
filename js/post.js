@@ -18,9 +18,10 @@ async function loadPost() {
   // Fetch posts.json (metadata) and .md (body) in parallel
   let meta = {}, bodyText = '';
   try {
+    const NC = { cache: 'no-cache' };
     const [postsRes, mdRes] = await Promise.all([
-      fetch('data/posts.json'),
-      fetch(`posts/${slug}.md`)
+      fetch('data/posts.json', NC),
+      fetch(`posts/${slug}.md`, NC)
     ]);
     if (!mdRes.ok) throw new Error('md_not_found');
     const posts = postsRes.ok ? await postsRes.json() : [];

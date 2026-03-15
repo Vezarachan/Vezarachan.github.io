@@ -106,7 +106,7 @@
 
 <script>
 async function load(path) {
-  const res = await fetch(path);
+  const res = await fetch(path, { cache: 'no-cache' });
   if (!res.ok) throw new Error(res.status);
   return res.json();
 }
