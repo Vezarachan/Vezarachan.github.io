@@ -68,11 +68,35 @@ subtitle:
 
 ...
 EOF
+  # Auto-append entry to data/posts.json
+  python3 - <<PYEOF
+import json, sys
+path = 'data/posts.json'
+with open(path) as f:
+    posts = json.load(f)
+# Don't add duplicate
+if not any(p.get('slug') == '${SLUG}' for p in posts):
+    posts.insert(0, {
+        "slug": "${SLUG}",
+        "title": "${TITLE}",
+        "date": "${DATE}",
+        "tags": [],
+        "subtitle": "",
+        "related_paper": "",
+        "related_research": ""
+    })
+    with open(path, 'w') as f:
+        json.dump(posts, f, indent=2, ensure_ascii=False)
+    print("✓  Added to data/posts.json")
+else:
+    print("⚠  Slug already in data/posts.json, skipped")
+PYEOF
+
   echo -e "${GREEN}✓  Created $FILE${RESET}"
   echo ""
   echo -e "${YELLOW}Next steps:${RESET}"
   echo "  1. Edit posts/${SLUG}.md"
-  echo "  2. Add entry to data/posts.json"
+  echo "  2. Fill in data/posts.json (tags, subtitle, related_paper…)"
   echo "  3. Run ./deploy.sh g \"add post: ${SLUG}\"   # commit"
   echo "     ./deploy.sh d                            # push"
   exit 0
