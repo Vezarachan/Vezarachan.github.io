@@ -4,6 +4,26 @@ function stripFrontmatter(text) {
   return match ? match[1] : text;
 }
 
+/* ── Protect math blocks from marked's markdown processing ──────────── */
+function protectMath(text) {
+  const blocks = [];
+  // Display math first ($$...$$), including multi-line
+  let out = text.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+    blocks.push(match);
+    return `\x02MATH${blocks.length - 1}\x03`;
+  });
+  // Inline math ($...$), single line only
+  out = out.replace(/\$([^\$\n]+?)\$/g, (match) => {
+    blocks.push(match);
+    return `\x02MATH${blocks.length - 1}\x03`;
+  });
+  return { out, blocks };
+}
+
+function restoreMath(html, blocks) {
+  return html.replace(/\x02MATH(\d+)\x03/g, (_, i) => blocks[+i]);
+}
+
 /* ── Main ───────────────────────────────────────────────────────────── */
 async function loadPost() {
   const params = new URLSearchParams(location.search);
@@ -25,7 +45,6 @@ async function loadPost() {
     ]);
     if (!mdRes.ok) throw new Error('md_not_found');
     const posts = postsRes.ok ? await postsRes.json() : [];
-    // posts.json is the single source of truth for title/date/tags/subtitle
     meta = posts.find(p => p.slug === slug) || {};
     bodyText = await mdRes.text();
   } catch (e) {
@@ -40,15 +59,15 @@ async function loadPost() {
   const title = meta.title || slug;
   const tags  = Array.isArray(meta.tags) ? meta.tags : (meta.tags ? [meta.tags] : []);
 
-  // Page & nav title
   document.getElementById('page-title').textContent = `${title} — Xiayin Lou`;
   document.getElementById('nav-title').textContent  = title;
 
-  // Strip frontmatter from .md — body only
-  const content = stripFrontmatter(bodyText);
+  // Strip frontmatter, protect math, parse markdown, restore math
+  const raw = stripFrontmatter(bodyText);
+  const { out: protected_, blocks } = protectMath(raw);
   marked.setOptions({ breaks: true, gfm: true });
   if (window.markedFootnote) marked.use(markedFootnote());
-  const bodyHtml = marked.parse(content);
+  const bodyHtml = restoreMath(marked.parse(protected_), blocks);
 
   main.innerHTML = `
     <article class="post-article">
