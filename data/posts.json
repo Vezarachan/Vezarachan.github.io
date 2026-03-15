@@ -1,7 +1,7 @@
 [
   {
     "slug": "geoconformal",
-    "title": "GeoConformal Prediction",
+    "title": "How much should we trust the results given by GeoAI models?",
     "date": "2025-03",
     "tags": ["Uncertainty Quantification", "GeoAI"],
     "subtitle": "A model-agnostic framework for generating statistically valid uncertainty regions for any geospatial prediction model.",
