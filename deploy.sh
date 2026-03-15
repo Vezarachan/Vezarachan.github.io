@@ -131,6 +131,11 @@ do_generate() {
     fi
   fi
 
+  # Auto-bump cache-buster version in HTML files using timestamp
+  STAMP=$(date +%s)
+  sed -i '' "s/main\.js?v=[^\"&']*/main.js?v=${STAMP}/g"   index.html
+  sed -i '' "s/post\.js?v=[^\"&']*/post.js?v=${STAMP}/g"   post.html
+
   echo -e "${CYAN}Commit message:${RESET} $MSG"
   echo ""
 
