@@ -44,8 +44,9 @@ async function loadPost() {
   document.getElementById('nav-title').textContent  = title;
 
   // Strip frontmatter from .md — body only
-  const content  = stripFrontmatter(bodyText);
+  const content = stripFrontmatter(bodyText);
   marked.setOptions({ breaks: true, gfm: true });
+  if (window.markedFootnote) marked.use(markedFootnote());
   const bodyHtml = marked.parse(content);
 
   main.innerHTML = `

@@ -186,6 +186,26 @@
   margin: 1.5rem 0;
 }
 
+/* ── Footnotes ──────────────────────────────────────────────────────── */
+.post-content .footnotes {
+  margin-top: 3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.post-content .footnotes ol { margin-left: 1.2rem; }
+.post-content .footnotes li { margin-bottom: 0.3rem; line-height: 1.6; }
+.post-content .footnote-ref a,
+.post-content .footnotes a {
+  color: var(--accent);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 0.78em;
+  vertical-align: super;
+}
+.post-content .footnote-ref a { padding: 0 0.1em; }
+
 /* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .post-main    { padding: 2rem 1.2rem 4rem; }
