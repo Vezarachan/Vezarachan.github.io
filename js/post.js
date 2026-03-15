@@ -1,22 +1,7 @@
-/* ── Frontmatter parser ─────────────────────────────────────────────── */
-function parseFrontmatter(text) {
-  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-  if (!match) return { meta: {}, content: text };
-
-  const meta = {};
-  match[1].split('\n').forEach(line => {
-    const colonIdx = line.indexOf(':');
-    if (colonIdx < 0) return;
-    const key = line.slice(0, colonIdx).trim();
-    let val  = line.slice(colonIdx + 1).trim();
-    // Array: [a, b, c]
-    if (val.startsWith('[') && val.endsWith(']')) {
-      val = val.slice(1, -1).split(',').map(s => s.trim()).filter(Boolean);
-    }
-    meta[key] = val;
-  });
-
-  return { meta, content: match[2] };
+/* ── Strip frontmatter, return body only ───────────────────────────── */
+function stripFrontmatter(text) {
+  const match = text.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n([\s\S]*)$/);
+  return match ? match[1] : text;
 }
 
 /* ── Main ───────────────────────────────────────────────────────────── */
@@ -30,28 +15,37 @@ async function loadPost() {
     return;
   }
 
-  let raw;
+  // Fetch posts.json (metadata) and .md (body) in parallel
+  let meta = {}, bodyText = '';
   try {
-    const res = await fetch(`posts/${slug}.md`);
-    if (!res.ok) throw new Error(res.status);
-    raw = await res.text();
+    const [postsRes, mdRes] = await Promise.all([
+      fetch('data/posts.json'),
+      fetch(`posts/${slug}.md`)
+    ]);
+    if (!mdRes.ok) throw new Error('md_not_found');
+    const posts = postsRes.ok ? await postsRes.json() : [];
+    // posts.json is the single source of truth for title/date/tags/subtitle
+    meta = posts.find(p => p.slug === slug) || {};
+    bodyText = await mdRes.text();
   } catch (e) {
-    main.innerHTML = `<div class="post-message">Post <code>${slug}</code> not found.</div>`;
+    if (e.message === 'md_not_found') {
+      main.innerHTML = `<div class="post-message">Post <code>${slug}</code> not found.</div>`;
+    } else {
+      main.innerHTML = `<div class="post-message">Failed to load post.</div>`;
+    }
     return;
   }
 
-  const { meta, content } = parseFrontmatter(raw);
-  const tags = Array.isArray(meta.tags) ? meta.tags : (meta.tags ? [meta.tags] : []);
+  const title = meta.title || slug;
+  const tags  = Array.isArray(meta.tags) ? meta.tags : (meta.tags ? [meta.tags] : []);
 
   // Page & nav title
-  const title = meta.title || slug;
   document.getElementById('page-title').textContent = `${title} — Xiayin Lou`;
   document.getElementById('nav-title').textContent  = title;
 
-  // Configure marked
+  // Strip frontmatter from .md — body only
+  const content  = stripFrontmatter(bodyText);
   marked.setOptions({ breaks: true, gfm: true });
-
-  // Render markdown → HTML
   const bodyHtml = marked.parse(content);
 
   main.innerHTML = `
