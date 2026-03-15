@@ -68,6 +68,6 @@ The framework is available as an open-source Python package. See the [demo](http
 
 ## References
 
-[^1] Venn, V., Gammerman, A., & Shafer, G. (2005). *Algorithmic learning in a random world.*
+[^1]: Venn, V., Gammerman, A., & Shafer, G. (2005). *Algorithmic learning in a random world.*
 
-[^2] Tobler WR. A computer movie simulating urban growth in the Detroit region. Economic geography. 1970 Jun 1;46(sup1):234-40.
+[^2]: Tobler WR. A computer movie simulating urban growth in the Detroit region. Economic geography. 1970 Jun 1;46(sup1):234-40.
