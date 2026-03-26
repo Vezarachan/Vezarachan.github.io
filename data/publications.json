@@ -39,7 +39,7 @@
   },
   {
     "year": 2025,
-    "type": "under-review",
+    "type": "technical report",
     "featured": true,
     "title": "GeoEvolve: Automating Geospatial Model Discovery via Multi-Agent Large Language Models",
     "authors": "Peng Luo, Xiayin Lou, Yu Zheng, Zhuo Zheng, Stefano Ermon",
