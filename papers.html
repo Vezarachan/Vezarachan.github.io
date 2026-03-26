@@ -81,9 +81,10 @@
       white-space: nowrap;
       margin-top: 2px;
     }
-    .pub-type-badge.journal      { background: #e8f4f4; color: #2d6a6a; }
-    .pub-type-badge.conference   { background: #f0eeff; color: #5b4fc7; }
-    .pub-type-badge.under-review { background: #fef3e2; color: #a0620a; }
+    .pub-type-badge.journal           { background: #e8f4f4; color: #2d6a6a; }
+    .pub-type-badge.conference        { background: #f0eeff; color: #5b4fc7; }
+    .pub-type-badge.under-review      { background: #fef3e2; color: #a0620a; }
+    .pub-type-badge.technical-report  { background: #f0f0ee; color: #555550; }
   </style>
 </head>
 <body>
@@ -122,8 +123,8 @@ async function load(path) {
   return res.json();
 }
 
-const TYPE_LABEL = { journal: 'Journal', conference: 'Conference', 'under-review': 'Under Review' };
-const TYPE_ORDER = ['journal', 'conference', 'under-review'];
+const TYPE_LABEL = { journal: 'Journal', conference: 'Conference', 'under-review': 'Under Review', 'technical-report': 'Technical Report' };
+const TYPE_ORDER = ['journal', 'conference', 'under-review', 'technical-report'];
 
 function renderPapersPage(pubs, profile, posts) {
   // build post lookup by related_paper title
