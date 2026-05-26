@@ -1,5 +1,19 @@
 [
   {
+    "title": "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
+    "event": "1st International Conference on Geospatial Artificial Intelligence (GeoAI 2026)",
+    "event_url": "https://geoaiconference.org/",
+    "location": "Ghent, Belgium",
+    "year": 2026,
+    "date": "Jun 2026",
+    "type": "oral",
+    "topic": "Uncertainty Quantification for GeoAI",
+    "abstract": "Presenting GeoXCP, a framework that quantifies uncertainty in spatial explanations from explainable AI models — covering the statistical foundation, geospatial calibration strategy, and case studies on urban and environmental prediction.",
+    "related_paper": "GeoXCP: Uncertainty Quantification of Spatial Explanations in Explainable AI",
+    "slides": "",
+    "video": ""
+  },
+  {
     "title": "Geospatial Conformal Prediction: Towards Trustworthy Uncertainty Quantification for GeoAI",
     "event": "Spatiotemporal Innovation Symposium",
     "year": 2025,

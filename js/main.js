@@ -242,15 +242,31 @@ function renderBeyond(profile, races) {
     html: `<div style="width:12px;height:12px;border-radius:50%;background:#b0ada6;border:2px solid #fff;box-shadow:0 0 0 1px #b0ada6,0 1px 4px rgba(0,0,0,0.25)"></div>`,
     iconSize: [12, 12], iconAnchor: [6, 6],
   });
+  const upcomingIcon = L.divIcon({
+    className: '',
+    html: `<div style="width:16px;height:16px;border-radius:50%;background:#e8853e;border:2.5px solid #fff;box-shadow:0 0 0 1.5px #e8853e,0 2px 6px rgba(0,0,0,0.35);animation:racePulse 2.2s ease-in-out infinite"></div>`,
+    iconSize: [16, 16], iconAnchor: [8, 8],
+  });
+
+  const raceStatus = r => {
+    if (r.status === 'upcoming') return 'upcoming';
+    if (r.time === 'DNF')        return 'dnf';
+    return 'finished';
+  };
 
   races.forEach(r => {
-    const isDNF = r.time === 'DNF';
-    const marker = L.marker([r.lat, r.lng], { icon: isDNF ? dnfIcon : finishedIcon });
+    const status = raceStatus(r);
+    const icon = status === 'upcoming' ? upcomingIcon : status === 'dnf' ? dnfIcon : finishedIcon;
+    const marker = L.marker([r.lat, r.lng], { icon });
+    const resultLine =
+      status === 'upcoming' ? `Upcoming · ${r.date}` :
+      status === 'dnf'      ? 'DNF' :
+                              `${r.time} · Score ${r.score}`;
     marker.bindPopup(`
       <div class="race-popup-name">${r.flag} ${r.short}</div>
       <div class="race-popup-meta">${r.name}</div>
       <div class="race-popup-meta">${r.date} · ${r.distance} / ${r.elevation}</div>
-      <div class="race-popup-score">${isDNF ? 'DNF' : `${r.time} · Score ${r.score}`}</div>
+      <div class="race-popup-score">${resultLine}</div>
     `);
     marker.addTo(map);
   });
@@ -260,13 +276,14 @@ function renderBeyond(profile, races) {
   if (listEl) {
     listEl.innerHTML = '';
     races.forEach(r => {
-      const isDNF = r.time === 'DNF';
+      const status = raceStatus(r);
+      const timeText = status === 'upcoming' ? 'Upcoming' : r.time;
       const item = el('div', 'race-item');
       item.innerHTML = `
-        <span class="race-item-date">${r.date.slice(0, 7)}</span>
+        <span class="race-item-date">${r.date}</span>
         <span class="race-item-name">${r.flag} ${r.short}<small>${r.name}</small></span>
         <span class="race-item-dist">${r.distance} / ${r.elevation}</span>
-        <span class="race-item-time ${isDNF ? 'dnf' : ''}">${r.time}</span>
+        <span class="race-item-time ${status}">${timeText}</span>
       `;
       item.addEventListener('click', () => map.setView([r.lat, r.lng], 9, { animate: true }));
       listEl.appendChild(item);
@@ -332,6 +349,7 @@ function renderTalksPreview(talks) {
     item.innerHTML = `
       <div class="talk-preview-meta">
         <span class="talk-preview-event">${t.event}</span>
+        ${t.location ? `<span class="talk-preview-location">· ${t.location}</span>` : ''}
         <span class="talk-preview-year">${t.year}</span>
         <span class="talk-preview-type">${t.type}</span>
       </div>

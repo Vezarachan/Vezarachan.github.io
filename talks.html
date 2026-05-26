@@ -64,6 +64,14 @@
       font-size: 0.72rem;
       color: var(--accent);
       font-weight: 600;
+      text-decoration: none;
+    }
+    a.talk-event:hover { text-decoration: underline; }
+
+    .talk-location {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
 
     .talk-type-badge {
@@ -222,11 +230,16 @@ function renderTalks(talks, pubs, profile) {
 
     const item = document.createElement('div');
     item.className = 'talk-item';
+    const eventHTML = t.event_url
+      ? `<a class="talk-event" href="${t.event_url}" target="_blank" rel="noopener">${t.event} ↗</a>`
+      : `<span class="talk-event">${t.event}</span>`;
+
     item.innerHTML = `
       <div class="talk-year">${t.year}</div>
       <div class="talk-body">
         <div class="talk-meta">
-          <span class="talk-event">${t.event}</span>
+          ${eventHTML}
+          ${t.location ? `<span class="talk-location">· ${t.location}</span>` : ''}
           <span class="talk-type-badge">${t.type}</span>
         </div>
         <div class="talk-title">${t.title}</div>

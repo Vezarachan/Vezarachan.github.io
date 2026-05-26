@@ -5,6 +5,10 @@
 #   ./deploy.sh g [message]            — generate only (commit, don't push)
 #   ./deploy.sh d                      — deploy only (push existing commit)
 #   ./deploy.sh new my-slug "Title"    — create new post template
+#   ./deploy.sh add race               — interactively append a race
+#   ./deploy.sh add talk               — interactively append a talk
+#   ./deploy.sh add news               — interactively append a news item
+#   ./deploy.sh add publication        — interactively append a publication
 #   ./deploy.sh status                 — show git status
 
 set -e
@@ -99,6 +103,140 @@ PYEOF
   echo "  2. Fill in data/posts.json (tags, subtitle, related_paper…)"
   echo "  3. Run ./deploy.sh g \"add post: ${SLUG}\"   # commit"
   echo "     ./deploy.sh d                            # push"
+  exit 0
+fi
+
+# ── Subcommand: add <race|talk|news|publication> ─────────────────────────
+if [ "$1" = "add" ]; then
+  KIND="$2"
+  if [ -z "$KIND" ]; then
+    echo "Usage: ./deploy.sh add <race|talk|news|publication>"
+    exit 1
+  fi
+  python3 - "$KIND" <<'PYEOF'
+import json, sys, datetime, pathlib
+
+kind = sys.argv[1]
+ROOT = pathlib.Path(__file__).parent if False else pathlib.Path('.')
+
+def ask(label, default=None, required=False, parser=str):
+    hint = f" [{default}]" if default not in (None, '') else (" *" if required else "")
+    while True:
+        raw = input(f"  {label}{hint}: ").strip()
+        if not raw:
+            if default is not None:
+                return default
+            if required:
+                print("    (required)")
+                continue
+            return None
+        try:
+            return parser(raw)
+        except Exception as e:
+            print(f"    invalid: {e}")
+
+def ask_choice(label, choices, default=None):
+    return ask(f"{label} ({'/'.join(choices)})", default=default, required=True,
+               parser=lambda s: s if s in choices else (_ for _ in ()).throw(ValueError(f"must be one of {choices}")))
+
+def load(path):
+    p = pathlib.Path(path)
+    if not p.exists(): return []
+    with p.open() as f: return json.load(f)
+
+def save(path, data):
+    with pathlib.Path(path).open('w') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+        f.write('\n')
+
+def commit_entry(path, entry, head=True):
+    data = load(path)
+    if head:
+        data.insert(0, entry)
+    else:
+        data.append(entry)
+    save(path, data)
+    print(f"\n✓  Appended to {path}")
+    print(json.dumps(entry, indent=2, ensure_ascii=False))
+
+print(f"\n→ Add {kind} entry  (blank to accept default; Ctrl-C to abort)\n")
+
+if kind == 'race':
+    today = datetime.date.today().isoformat()
+    entry = {
+        'date':      ask('date (YYYY-MM-DD)', default=today, required=True),
+        'name':      ask('name (full race name)', required=True),
+        'short':     ask('short label (e.g. "Lavaredo 50K")', required=True),
+        'country':   ask('country code (ITA/SUI/AUT/FRA/ESP/SLO/GER…)', required=True),
+        'flag':      ask('flag emoji', required=True),
+        'category':  ask('category (50K / 50M / 100K / 100M / Half Marathon)', required=True),
+        'distance':  ask('distance (e.g. "86 km")', required=True),
+        'elevation': ask('elevation (e.g. "5500 m+")', required=True),
+        'time':      ask('finish time (HH:MM:SS or DNF; blank if upcoming)'),
+        'score':     ask('ITRA score (int or blank)', parser=lambda s: int(s)),
+        'lat':       ask('latitude (float)', required=True, parser=float),
+        'lng':       ask('longitude (float)', required=True, parser=float),
+    }
+    status = ask_choice('status', ['finished', 'dnf', 'upcoming'],
+                        default='upcoming' if entry['time'] is None else ('dnf' if entry['time'] == 'DNF' else 'finished'))
+    if status == 'upcoming':
+        entry['status'] = 'upcoming'
+    commit_entry('data/races.json', entry, head=True)
+
+elif kind == 'talk':
+    entry = {
+        'title':         ask('title', required=True),
+        'event':         ask('event (conference/symposium name)', required=True),
+        'event_url':     ask('event_url (conference homepage, optional)'),
+        'location':      ask('location (e.g. "Ghent, Belgium")'),
+        'year':          ask('year', required=True, parser=int),
+        'date':          ask('date (free text, e.g. "Jun 2026")', required=True),
+        'type':          ask('type (invited / oral / poster / keynote)', required=True),
+        'topic':         ask('topic tag', required=True),
+        'abstract':      ask('abstract', required=True),
+        'related_paper': ask('related_paper (exact title from publications.json, or blank)'),
+        'slides':        ask('slides URL', default=''),
+        'video':         ask('video URL', default=''),
+    }
+    entry = {k: v for k, v in entry.items() if v is not None}
+    commit_entry('data/talks.json', entry, head=True)
+
+elif kind == 'news':
+    entry = {
+        'date':      ask('date (e.g. "May 2026")', required=True),
+        'content':   ask('content (text before the link)', required=True),
+        'link_text': ask('link_text (the linked title)', required=True),
+        'link_url':  ask('link_url', default='#'),
+        'suffix':    ask('suffix (text after the link)', default=''),
+    }
+    commit_entry('data/news.json', entry, head=True)
+
+elif kind == 'publication':
+    entry = {
+        'year':     ask('year', required=True, parser=int),
+        'type':     ask_choice('type', ['journal', 'conference', 'under-review', 'technical-report']),
+        'featured': ask('featured? (y/n)', default='n', parser=lambda s: s.lower().startswith('y')),
+        'title':    ask('title', required=True),
+        'authors':  ask('authors (comma-separated, bold yourself with **)', required=True),
+        'venue':    ask('venue', required=True),
+        'tags':     ask('tags (comma-separated)', default='',
+                        parser=lambda s: [t.strip() for t in s.split(',') if t.strip()]),
+        'url':      ask('url', default=''),
+        'pdf':      ask('pdf URL', default=''),
+        'code':     ask('code URL', default=''),
+        'demo':     ask('demo URL (optional)', default=''),
+    }
+    if not entry['demo']:
+        entry.pop('demo')
+    commit_entry('data/publications.json', entry, head=True)
+
+else:
+    print(f"Unknown kind: {kind}")
+    print("Supported: race, talk, news, publication")
+    sys.exit(1)
+PYEOF
+  echo ""
+  echo -e "${YELLOW}Next:${RESET} ${CYAN}./deploy.sh${RESET}   # generate + deploy"
   exit 0
 fi
 

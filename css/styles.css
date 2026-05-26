@@ -775,7 +775,7 @@ footer a {
 
 .race-item {
   display: grid;
-  grid-template-columns: 80px 1fr auto auto;
+  grid-template-columns: 96px 1fr auto auto;
   gap: 0.8rem;
   align-items: center;
   padding: 0.8rem 1.4rem;
@@ -791,6 +791,7 @@ footer a {
   font-family: var(--mono);
   font-size: 0.7rem;
   color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .race-item-name { font-weight: 500; }
@@ -813,10 +814,16 @@ footer a {
   font-weight: 600;
 }
 
-.race-item-time.dnf { color: var(--text-muted); font-weight: 400; }
+.race-item-time.dnf      { color: var(--text-muted); font-weight: 400; }
+.race-item-time.upcoming { color: #e8853e; }
+
+@keyframes racePulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: 0.7; transform: scale(1.12); }
+}
 
 @media (max-width: 600px) {
-  .race-item { grid-template-columns: 70px 1fr auto; }
+  .race-item { grid-template-columns: 90px 1fr auto; }
   .race-item-dist { display: none; }
 }
 
@@ -851,6 +858,11 @@ footer a {
   font-weight: 600;
 }
 .talk-preview-year {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.talk-preview-location {
   font-family: var(--mono);
   font-size: 0.7rem;
   color: var(--text-muted);

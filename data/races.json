@@ -1,5 +1,35 @@
 [
   {
+    "date": "2026-07-18",
+    "name": "Eiger Ultra Trail",
+    "short": "Eiger 101",
+    "country": "SUI",
+    "flag": "🇨🇭",
+    "category": "100K",
+    "distance": "101 km",
+    "elevation": "6700 m+",
+    "time": null,
+    "score": null,
+    "lat": 46.6244,
+    "lng": 8.0356,
+    "status": "upcoming"
+  },
+  {
+    "date": "2026-06-19",
+    "name": "Zugspitz Ultra Trail by UTMB",
+    "short": "Ehrwald 86K",
+    "country": "AUT",
+    "flag": "🇦🇹",
+    "category": "100K",
+    "distance": "86 km",
+    "elevation": "4295 m+",
+    "time": null,
+    "score": null,
+    "lat": 47.4011,
+    "lng": 10.9097,
+    "status": "upcoming"
+  },
+  {
     "date": "2025-09-20",
     "name": "Julian Alps Trail Run by UTMB",
     "short": "Lake Bled 80k",
